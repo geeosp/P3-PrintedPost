@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.facebook.appevents.AppEventsLogger;
 import com.parse.ParseUser;
 
 
@@ -15,10 +16,18 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Logs 'install' and 'app activate' App Events.
+        AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_main);
         TextView editText = (TextView) findViewById(R.id.et_hello);
         editText.setText(ParseUser.getCurrentUser().getEmail());
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AppEventsLogger.deactivateApp(this);
     }
 
     @Override

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.p3.printedpost" >
+    package="com.p3.printedpost">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -9,17 +9,26 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
         android:name=".PrintedPost"
         android:allowBackup="true"
         android:label="@string/app_name"
-        android:theme="@style/MyTheme" >
-<!--android:icon="@drawable/ic_launcher"
-        android:logo="@drawable/ic_launcher"-->
+        android:theme="@style/MyTheme">
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
-        <activity android:name=".RegisterActivity" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/app_name" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/app_name"
@@ -33,14 +42,11 @@
         </activity>
         <activity
             android:name=".ResetPasswordActivity"
-            android:label="@string/title_activity_reset_password" >
-        </activity>
+            android:label="@string/app_name"></activity>
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main"
-            android:launchMode="singleTask"
-            >
-        </activity>
+            android:label="@string/app_name"
+            android:launchMode="singleTask"></activity>
     </application>
 
 </manifest>

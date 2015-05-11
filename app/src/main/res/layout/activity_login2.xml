@@ -46,8 +46,7 @@
 
                 android:layout_width="@dimen/iv_logo_size"
                 android:layout_height="@dimen/iv_logo_size"
-                android:layout_marginTop="20dp"
-                 />
+                android:layout_marginTop="20dp" />
 
             <LinearLayout
                 android:id="@+id/ll_login"
@@ -79,10 +78,9 @@
                     android:hint="@string/prompt_password"
                     android:inputType="textPassword"
 
-                    android:textColor="@color/et_password_textColor"
-                    android:textColorHint="@color/et_password_colorHint"
                     android:text="@string/test_password"
-                    />
+                    android:textColor="@color/et_password_textColor"
+                    android:textColorHint="@color/et_password_colorHint" />
                 <!--TODO removerText-->
 
                 <TextView
@@ -96,7 +94,12 @@
                     android:text="@string/forgot_password"
                     android:textColor="@color/tv_forget_password_textColor" />
 
-
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bt_facebook_login"
+                    android:onClick="loginFacebook"
+                    android:text="facebook"/>
             </LinearLayout>
 
         </LinearLayout>

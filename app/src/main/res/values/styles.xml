@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
         <!--
           <item name="actionBarStyle">@style/myTheme.ActionBar</item>
           <item name="android:editTextStyle">@style/App_EditTextStyle</item>

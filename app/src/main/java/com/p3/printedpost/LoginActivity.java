@@ -17,10 +17,13 @@ import android.widget.EditText;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseFacebookUtils;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -31,13 +34,18 @@ public class LoginActivity extends Activity {
     AutoCompleteTextView et_email;
     EditText et_password;
 
+    public void openMain() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (ParseUser.getCurrentUser() != null) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            openMain();
+
         } else {
             setContentView(R.layout.activity_login2);
             et_email = (AutoCompleteTextView) findViewById(R.id.et_email);
@@ -145,5 +153,32 @@ public class LoginActivity extends Activity {
         startActivity(intent);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ParseFacebookUtils.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void loginFacebook(View v) {
+        List<String> permissions = Arrays.asList("email", "public_profile", "user_friends");
+        ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
+            @Override
+            public void done(ParseUser user, ParseException err) {
+                if (user == null) {
+                    Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
+                } else if (user.isNew()) {
+                    Log.d("MyApp", "User signed up and logged in through Facebook!");
+
+
+
+                    openMain();
+                } else {
+                    Log.d("MyApp", "User logged in through Facebook!");
+
+                    openMain();
+                }
+            }
+        });
+    }
 
 }
