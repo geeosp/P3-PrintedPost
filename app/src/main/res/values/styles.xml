@@ -1,8 +1,40 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--
+          <item name="actionBarStyle">@style/myTheme.ActionBar</item>
+          <item name="android:editTextStyle">@style/App_EditTextStyle</item>
+          <item name="actionMenuTextColor">@color/actionbar_text</item>
+          <item name="android:windowContentOverlay">@null</item>
+          <item name="android:windowBackground">@color/app_background</item>
+          <item name="android:toolbarStyle">@style/myToolbar</item>
+          -->
     </style>
+    <style name="MyTheme" parent="AppBaseTheme"></style>
+    <!--
 
+
+        <style name="myTheme.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar">
+            <item name="android:background">@color/actionbarcolor</item>
+            <item name="android:icon">@drawable/ic_launcher</item>
+            <item name="android:titleTextStyle">@style/TitleColor</item>
+            < Support library compatibility >
+            <item name="background">@color/actionbarcolor</item>
+            <item name="titleTextStyle">@style/TitleColor</item>
+
+
+        </style>
+        <style name="myToolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+        <style name="TitleColor" parent="TextAppearance.AppCompat.Title">
+            <item name="android:textColor">@color/actionbar_text</item>
+        </style>
+
+        <style name="App_EditTextStyle" parent="Widget.AppCompat.EditText">
+            <item name="android:textColorHint">@color/et_default_textHintColor</item>
+            <item name="android:textColor">@color/et_default_textColor</item>
+            <item name="android:textCursorDrawable">@drawable/cursor_color</item>
+            <item name="android:background">@drawable/edittext</item>
+        </style>
+    -->
 </resources>

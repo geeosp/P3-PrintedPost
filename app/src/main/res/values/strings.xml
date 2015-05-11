@@ -1,6 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PrintedPost</string>
 
+
+
+
+    <!--comumMenu-->
+    <string name="action_settings">Configurações</string>
+    <string name="action_logout">Sair</string>
+
+    <!--LoginActivity-->
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email_or_username">Email ou  username</string>
+    <string name="prompt_password">Senha</string>
+    <string name="forgot_password">Esqueci minha senha</string>
+    <string name="enter">Entrar</string>
+    <string name="register">Junte-se a nós!</string>
+    <string name="error_wrong_password">A senha está errada</string>
+    <string name="error_email_not_found">"Não te encontramos</string>
+    <string name="logging_title">Entrando</string>
+    <string name="logging_message">Por favor, espere</string>
+
+    <!--RegisterActivity-->
+    <string name="title_activity_register">RegisterActivity</string>
+    <string name="welcome">Bem-vindo!</string>
+    <string name="name">Nome</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_username">Username</string>
+    <string name="retype_password">Repita a senha</string>
+    <string name="invalid_email">Por favor, digite um email válido</string>
+    <string name="invalid_username">Nao utilize caracteres especiais no username</string>
+    <string name="short_password">Essa senha é muito curta, crie uma com pelo menos 6 caracteres</string>
+    <string name="passwordDontMatch">Os campos de senha não conferem</string>
+    <string name="action_ok">Ok</string>
+    <string name="name_too_short">Por favor, nos diga seu nome</string>
+    <string name="registering_title">Registrando</string>
+    <string name="registering_message">Por favor, espere</string>
+    <string name="error_invalid_email">Email inválido</string>
+    <string name="error_account_exists">Nós já nos conhecemos, será que você não esqueceu sua senha??</string>
+
+    <!--ResetPasswordActivity-->
+    <string name="title_activity_reset_password">ResetPasswordActivity</string>
+    <string name="type_your_email">Email</string>
+    <string name="reset_password">Recuperar senha</string>
+    <string name="title_activity_main">MainActivity</string>
+
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+
+
+
+    <!--tests-->
+    <string name="test_username">geeo.sp@gmail.com</string>
+    <string name="test_password">12345678</string>
+    <string name="test_name">Geovane Pereira</string>
+    "
+
+
 </resources>
+
+
