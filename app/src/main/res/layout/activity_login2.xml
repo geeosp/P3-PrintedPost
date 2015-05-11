@@ -1,0 +1,107 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.intera.conte2.last.LoginActivity">
+
+    <Button
+        android:id="@+id/bt_register"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:onClick="registerClick"
+        android:text="@string/register" />
+
+    <Button
+        android:id="@+id/bt_enter"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bt_register"
+
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:onClick="enterClick"
+        android:padding="@dimen/bt_enter_padding"
+        android:text="@string/enter" />
+
+    <ScrollView
+        android:id="@+id/sv_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bt_enter">
+
+
+        <LinearLayout
+            android:id="@+id/ll_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_logo"
+
+                android:layout_width="@dimen/iv_logo_size"
+                android:layout_height="@dimen/iv_logo_size"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/login_icon" />
+
+            <LinearLayout
+                android:id="@+id/ll_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/ll_login_margin"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <AutoCompleteTextView
+                    android:id="@+id/et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_action_user"
+                    android:hint="@string/prompt_email"
+                    android:inputType="textEmailAddress"
+                    android:text="@string/test_username"
+                    android:textColor="@color/et_email_textColor"
+                    android:textColorHint="@color/et_email_colorHint"><!--TODO removerText-->
+                    <!--requestFocus /-->
+                </AutoCompleteTextView>
+
+                <EditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/et_margintop"
+                    android:drawableLeft="@drawable/ic_action_accounts"
+                    android:hint="@string/prompt_password"
+                    android:inputType="textPassword"
+
+                    android:textColor="@color/et_password_textColor"
+                    android:textColorHint="@color/et_password_colorHint"
+                    android:text="@string/test_password"
+                    />
+                <!--TODO removerText-->
+
+                <TextView
+                    android:id="@+id/tv_forget_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="@dimen/tv_forget__password_marginTop"
+                    android:clickable="true"
+                    android:onClick="resetClick"
+                    android:text="@string/forgot_password"
+                    android:textColor="@color/tv_forget_password_textColor" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--   É assim que se faz um comentário   -->
+    <!-- declarações comuns:
+        criacao da cor:
+    <color name="nome_da_cor_seme_espaço">#123ABC</color>
+            ou
+            referencia à cor
+    <color name="nome_da_cor">@color/cor_ja_definida</color>
+    -->
+
+    <!--referenciem as cores aqui-->
+    <!-- main-->
+    <color name="actionbarcolor">@color/conte_sereno</color>
+    <color name="tabTextColor">@color/conte_amor</color>
+    <color name="tabIndicatorColor">@color/conte_amor</color>
+    <color name="actionbar_text">@color/conte_feather</color>
+    <color name="app_background">@color/conte_feather</color>
+    <!--color name="tabBackgroundColor">@color/red</color-->
+    <color name="tabDividerColor">@color/white</color>
+    <color name="viewpagerBackground">@color/app_background</color>
+    <color name="pagerslidingbackground">@color/white</color>
+
+
+    <!-- list-->
+    <color name="listdivider">@color/invisible</color>
+    <!-- list item-->
+    <color name="list_item_background">@color/conte_half_serreno</color>
+    <color name="list_image_background">@color/white4</color>
+    <color name="list_item_text">@color/white</color>
+    <color name="list_tag_color">@color/white2</color>
+    <color name="invisibleListitem">@color/invisiblelightgray</color>
+    <!--tem que ser o mesmo que o list_item_background adicionado do valor 00 em alpha-->
+
+
+    <!--image tiles edit preview create history-->
+    <color name="image_tile_background">@color/test_otherBackgrounds</color>
+    <color name="text_tile">@color/white</color>
+    <color name="lightgray">#f2f2f2</color>
+
+
+    <!-- login -->
+    <color name="et_email_textColor">@color/et_default_textColor</color>
+    <color name="et_email_colorHint">@color/et_default_textHintColor</color>
+    <color name="et_password_textColor">@color/et_default_textColor</color>
+    <color name="et_password_colorHint">@color/et_default_textHintColor</color>
+    <color name="tv_forget_password_textColor">@color/white</color>
+    <color name="bt_enter_textColor">@color/white</color>
+    <color name="bt_register_textColor">@color/white</color>
+    <color name="tv_or_textColor">@color/white</color>
+
+
+    <!-- edit_history -->
+
+    <!-- edit_image -->
+    <color name="image_cancel_bt">#88ff0000</color>
+    <color name="iv_image_background">@color/black</color>
+    <!-- play_History-->
+    <color name="playHistory_imageText_TextColor">@color/conte_half_sossego</color>
+    <color name="playHistory_imageText_background">@color/conte_sossego</color>
+    <color name="addimage_buttons">@color/conte_sossego</color>
+
+    <!--defaults -->
+    <color name="et_default_textHintColor">@color/half_black</color>
+    <color name="et_default_textColor">@color/black</color>
+    <!--<color name="fab_colorNormal">@color/conteDeepOrange2</color>-->
+    <color name="fab_colorNormal">@color/conte_afeto</color>
+    <color name="fab_colorPressed">@color/conte_aconchego</color>
+    <color name="fab_colorRipple">@color/conte_apoio</color>
+    <!--esse aqui so aparece no android 5.0+. É a cor edo efeito de onda, que parte de onde o user tocou-->
+    <color name="default_cursor_color">@color/half_black</color>
+    <color name="et_default_foucused_background">@color/half_white</color>
+    <color name="et_default_unfoucused_background">@color/quarter_white</color>
+    <color name="half_white">#88ffffff</color>
+    <color name="half_black">#88000000</color>
+    <color name="quarter_white">#44ffffff</color>
+    <color name="quarter_black">#44000000</color>
+    <color name="et_default_stroke">#88888888</color>
+    <color name="edit_text_background_color_transparent">#44ffffff</color>
+
+
+    <!--APP CONTE PALLET-->
+    <color name="conte_sossego">#135c70</color>
+    <color name="conte_half_sossego">#80135c70</color>
+    <color name="conte_calmaria">#358aaf</color>
+    <color name="conte_sereno">#64b9e8</color>
+    <color name="conte_half_serreno">#EA64b9e8</color>
+    <color name="conte_paz">#b7d3e2</color>
+    <color name="conte_apoio">#872621</color>
+    <color name="conte_aconchego">#c14c40</color>
+    <color name="conte_afeto">#f16c58</color>
+    <color name="conte_amor">#f8b7ad</color>
+    <color name="conte_feather">#c5d2d8</color>
+
+
+    <color name="transparent">#00000000</color>
+    <!-- card colors -->
+    <color name="card_background">#ffffff</color>
+    <color name="card_shadow_1">#d4d4d4</color>
+    <color name="card_shadow_2">#dddddd</color>
+    <color name="card_detailing">#eee</color>
+
+    <color name="verde_bonitinho">#39d941</color>
+    <color name="verde_bonitinho_pressed">#30cf38</color>
+
+
+    <!-- used by geeo -->
+    <color name="invisible">#00ffffff</color>
+    <color name="darkblue">#222c37</color>
+    <color name="almostdarkblue">#4F667F</color>
+    <color name="darkblue2">#ff36435c</color>
+    <color name="darkblue3">#ff1f4574</color>
+    <color name="darkblue4">#ff336ab2</color>
+    <color name="appcian">#00cccc</color>
+    <color name="appcian2">#4fafab</color>
+    <color name="white2">#f0f0f0</color>
+    <color name="white3">#ffa0a0a0</color>
+    <color name="white4">#dddcdc</color>
+    <!--color name="test_appbackground">#70c0ea</color-->
+    <color name="test_appbackground">#e5e5e5</color>
+    <color name="test_appactionbarbackgtound">#0095d2</color>
+    <color name="test_otherBackgrounds">#323438</color>
+    <color name="list_item_background2">@color/white</color>
+    <!--<color name="item_bar_test">#70c0ea</color>-->
+    <color name="item_bar_test">#70c0ea</color>
+
+    <!--alpha values-->
+    <color name="invisibleDarkBlue">#00222c37</color>
+    <color name="invisiblewhite">#00ffffff</color>
+    <color name="invisiblealmostdarkblue">#004F667F</color>
+    <color name="invisiblelightgray">#00f2f2f2</color>
+    <!-- template colors-->
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="blue">#0000ff</color>
+    <color name="red">#ff0000</color>
+    <color name="yellow">#ffff00</color>
+    <color name="green">#00ff00</color>
+    <color name="cian">#00ffff</color>
+    <color name="magent">#ff00ff</color>
+
+</resources>
+
