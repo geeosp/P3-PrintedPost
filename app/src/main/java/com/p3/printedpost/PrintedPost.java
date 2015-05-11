@@ -30,7 +30,7 @@ public class PrintedPost extends Application {
         Parse.initialize(this, "hGNzYptoQo0eLE4NNjYrom3xoRvr6zeNPkhUtSbI", "SP1UR3W9A41NPH1plxDOSzXKgJVezcavMu7zeUtB");
         FacebookSdk.sdkInitialize(getApplicationContext());
         ParseFacebookUtils.initialize(this);
-        ParseUser.logOut();
+     //   ParseUser.logOut();
 
         try {
 
