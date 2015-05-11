@@ -28,7 +28,8 @@
                 android:id="@+id/iv_logo"
                 android:layout_width="@dimen/iv_logo_size_register"
                 android:layout_height="@dimen/iv_logo_size_register"
-                android:background="@drawable/login_icon" />
+                android:background="#333333"
+                />
 
             <LinearLayout
                 android:id="@+id/ll_login"

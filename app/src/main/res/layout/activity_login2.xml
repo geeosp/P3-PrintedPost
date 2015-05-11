@@ -47,7 +47,7 @@
                 android:layout_width="@dimen/iv_logo_size"
                 android:layout_height="@dimen/iv_logo_size"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/login_icon" />
+                 />
 
             <LinearLayout
                 android:id="@+id/ll_login"
@@ -61,7 +61,7 @@
                     android:id="@+id/et_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_action_user"
+
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:text="@string/test_username"
@@ -75,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/et_margintop"
-                    android:drawableLeft="@drawable/ic_action_accounts"
+
                     android:hint="@string/prompt_password"
                     android:inputType="textPassword"
 
