@@ -15,10 +15,19 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
+import com.facebook.AccessToken;
+
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
+
 import com.parse.ParseUser;
+
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,18 +43,11 @@ public class LoginActivity extends Activity {
     AutoCompleteTextView et_email;
     EditText et_password;
 
-    public void openMain() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (ParseUser.getCurrentUser() != null) {
             openMain();
-
         } else {
             setContentView(R.layout.activity_login2);
             et_email = (AutoCompleteTextView) findViewById(R.id.et_email);
@@ -120,17 +122,19 @@ public class LoginActivity extends Activity {
                     Log.e("LOGIN", e.getMessage());
                     Log.e("LOGIN", "" + e.getCode());
 //                    Log.e("LOGIN", "" + e.getCause().getMessage());
+                    Resources res = getResources();
                     switch (e.getCode()) {
                         case ParseException.VALIDATION_ERROR:
-                            Resources res = getResources();
-                            GUI.alert(LoginActivity.this, res.getString(R.string.error_wrong_password));
+                            GUI.alert(LoginActivity.this, res.getString(R.string.error_user_password_not_match));
                             Log.e("Parse", "Senha errada");
                             break;
                         case ParseException.EMAIL_NOT_FOUND:
                             Log.e("Parse", "Email not found");
+                            GUI.alert(LoginActivity.this, res.getString(R.string.error_user_password_not_match));
                             break;
                         case ParseException.OBJECT_NOT_FOUND:
                             Log.e("Parse", "Object not found");
+                            GUI.alert(LoginActivity.this, res.getString(R.string.error_user_password_not_match));
                             break;
 
 
@@ -153,6 +157,12 @@ public class LoginActivity extends Activity {
         startActivity(intent);
     }
 
+    public void openMain() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -168,17 +178,43 @@ public class LoginActivity extends Activity {
                     Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
                 } else if (user.isNew()) {
                     Log.d("MyApp", "User signed up and logged in through Facebook!");
-
-
-
+                    getInfo();
                     openMain();
+
                 } else {
                     Log.d("MyApp", "User logged in through Facebook!");
-
+                    getInfo();
                     openMain();
                 }
             }
         });
+    }
+
+    public void getInfo() {
+        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+            @Override
+            public void onCompleted(
+                    JSONObject object,
+                    GraphResponse response) {
+                Log.e("oi", object.toString());
+                ParseUser user = ParseUser.getCurrentUser();
+                try {
+                    String email = object.getString("email");
+                    String name = object.getString("name");
+                    user.setEmail(email);
+                    user.put("name", name);
+                    user.saveInBackground();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        });
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "name, email");
+        request.setParameters(parameters);
+        request.executeAsync();
+
     }
 
 }
