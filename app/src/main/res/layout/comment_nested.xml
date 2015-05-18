@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="40dp"
+    android:background="@android:drawable/alert_light_frame">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/teal_100"
+        android:padding="5dp">
+
+        <RelativeLayout
+            android:id="@+id/rl_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/rr_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="user_name"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="5dp"
+
+                    android:text="08/11/1992"
+                    android:textSize="16dp" />
+
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/iv_user_photo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/rr_info"
+                android:background="@color/teal_400" />
+
+            <TextView
+                android:id="@+id/tv_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rr_info"
+                android:layout_marginLeft="5dp"
+                android:layout_toLeftOf="@id/iv_user_photo"
+                android:text="A única área que eu acho, que vai exigir muita atenção nossa, e aí eu já aventei a hipótese de até criar um.
+" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_comment"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/bt_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="up" />
+
+                <TextView
+                    android:id="@+id/tv_up_cont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/bt_up"
+                    android:gravity="center_vertical"
+                    android:text="12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/ll_up">
+
+                <Button
+                    android:id="@+id/bt_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="down" />
+
+                <TextView
+                    android:id="@+id/tv_down_cont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/bt_up"
+                    android:gravity="center_vertical"
+                    android:text="2" />
+            </LinearLayout>
+
+            <!--Button
+                android:id="@+id/bt_reply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_toLeftOf="@id/ll_down"
+                android:text="reply" /-->
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>

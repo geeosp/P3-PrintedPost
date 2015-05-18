@@ -4,7 +4,6 @@
     <string name="facebook_app_id">296300643827518</string>
 
 
-
     <!--comumMenu-->
     <string name="action_settings">Configurações</string>
     <string name="action_logout">Sair</string>
@@ -16,7 +15,7 @@
     <string name="forgot_password">Esqueci minha senha</string>
     <string name="enter">Entrar</string>
     <string name="register">Junte-se a nós!</string>
-    <string name="error_user_password_not_match">A combinação usuário senha não foi encontrada</string>
+    <string name="error_wrong_password">A senha está errada</string>
     <string name="error_email_not_found">"Não te encontramos</string>
     <string name="logging_title">Entrando</string>
     <string name="logging_message">Por favor, espere</string>
@@ -45,10 +44,7 @@
     <string name="reset_password">Recuperar senha</string>
     <string name="title_activity_main">MainActivity</string>
 
-
-
     <string name="hello_world">Hello world!</string>
-
 
 
     <!--tests-->

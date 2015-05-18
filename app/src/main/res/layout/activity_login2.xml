@@ -64,8 +64,7 @@
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:text="@string/test_username"
-                    android:textColor="@color/et_email_textColor"
-                    android:textColorHint="@color/et_email_colorHint"><!--TODO removerText-->
+                   ><!--TODO removerText-->
                     <!--requestFocus /-->
                 </AutoCompleteTextView>
 
@@ -79,8 +78,7 @@
                     android:inputType="textPassword"
 
                     android:text="@string/test_password"
-                    android:textColor="@color/et_password_textColor"
-                    android:textColorHint="@color/et_password_colorHint" />
+                   />
                 <!--TODO removerText-->
 
                 <TextView
@@ -92,7 +90,7 @@
                     android:clickable="true"
                     android:onClick="resetClick"
                     android:text="@string/forgot_password"
-                    android:textColor="@color/tv_forget_password_textColor" />
+                  />
 
                 <Button
                     android:layout_width="wrap_content"

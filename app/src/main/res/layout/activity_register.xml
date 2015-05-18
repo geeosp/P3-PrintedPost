@@ -45,8 +45,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/name"
                     android:inputType="textPersonName"
-                    android:textColor="@color/et_email_textColor"
-                    android:textColorHint="@color/et_email_colorHint"
+
                     android:text="@string/test_name">
 
                     <requestFocus />
@@ -69,8 +68,6 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
-                    android:textColor="@color/et_email_textColor"
-                    android:textColorHint="@color/et_email_colorHint"
                     android:layout_marginTop="@dimen/et_margintop"
                     android:text="@string/test_username">
 
@@ -83,8 +80,7 @@
                     android:layout_marginTop="@dimen/et_margintop"
                     android:hint="@string/prompt_password"
                     android:inputType="textPassword"
-                    android:textColor="@color/et_password_textColor"
-                    android:textColorHint="@color/et_password_colorHint"
+
                     android:text="@string/test_password"/>
 
                 <EditText
@@ -94,8 +90,7 @@
                     android:layout_marginTop="@dimen/et_margintop"
                     android:hint="@string/retype_password"
                     android:inputType="textPassword"
-                    android:textColor="@color/et_password_textColor"
-                    android:textColorHint="@color/et_password_colorHint"
+
                     android:text="@string/test_password"/>
 
                 <LinearLayout

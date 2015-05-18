@@ -122,19 +122,17 @@ public class LoginActivity extends Activity {
                     Log.e("LOGIN", e.getMessage());
                     Log.e("LOGIN", "" + e.getCode());
 //                    Log.e("LOGIN", "" + e.getCause().getMessage());
-                    Resources res = getResources();
                     switch (e.getCode()) {
                         case ParseException.VALIDATION_ERROR:
-                            GUI.alert(LoginActivity.this, res.getString(R.string.error_user_password_not_match));
+                            Resources res = getResources();
+                            GUI.alert(LoginActivity.this, res.getString(R.string.error_wrong_password));
                             Log.e("Parse", "Senha errada");
                             break;
                         case ParseException.EMAIL_NOT_FOUND:
                             Log.e("Parse", "Email not found");
-                            GUI.alert(LoginActivity.this, res.getString(R.string.error_user_password_not_match));
                             break;
                         case ParseException.OBJECT_NOT_FOUND:
                             Log.e("Parse", "Object not found");
-                            GUI.alert(LoginActivity.this, res.getString(R.string.error_user_password_not_match));
                             break;
 
 
@@ -146,7 +144,6 @@ public class LoginActivity extends Activity {
         });
 
     }
-
     public void registerClick(View v) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
@@ -178,19 +175,20 @@ public class LoginActivity extends Activity {
                     Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
                 } else if (user.isNew()) {
                     Log.d("MyApp", "User signed up and logged in through Facebook!");
-                    getInfo();
+                    setEmailAndUserNameToServer();
                     openMain();
 
                 } else {
                     Log.d("MyApp", "User logged in through Facebook!");
-                    getInfo();
+                    setEmailAndUserNameToServer();
                     openMain();
                 }
             }
         });
     }
 
-    public void getInfo() {
+
+    public void setEmailAndUserNameToServer() {
         GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(
@@ -198,13 +196,13 @@ public class LoginActivity extends Activity {
                     GraphResponse response) {
                 Log.e("oi", object.toString());
                 ParseUser user = ParseUser.getCurrentUser();
-                try {
+                try{
                     String email = object.getString("email");
                     String name = object.getString("name");
                     user.setEmail(email);
                     user.put("name", name);
                     user.saveInBackground();
-                } catch (Exception e) {
+                }catch (Exception e){
                     e.printStackTrace();
                 }
             }
@@ -213,8 +211,8 @@ public class LoginActivity extends Activity {
         Bundle parameters = new Bundle();
         parameters.putString("fields", "name, email");
         request.setParameters(parameters);
+
         request.executeAsync();
 
     }
-
 }
