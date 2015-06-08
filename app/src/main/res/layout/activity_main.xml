@@ -1,16 +1,23 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.p3.printedpost.MainActivity">
 
     <me.dm7.barcodescanner.zbar.ZBarScannerView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:background="#992255"
         android:id="@+id/zbarView"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#992255"
+        android:clickable="false">
 
     </me.dm7.barcodescanner.zbar.ZBarScannerView>
 
-</LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00ff0099"
+        android:clickable="true"
+        android:id="@+id/v_root"></View>
+</RelativeLayout>

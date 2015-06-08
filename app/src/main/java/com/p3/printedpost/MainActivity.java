@@ -31,32 +31,27 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         // TextView editText = (TextView) findViewById(R.id.et_hello);
         //editText.setText(ParseUser.getCurrentUser().getEmail());
-         final ZBarScannerView mScannerView = (ZBarScannerView) findViewById(R.id.zbarView);
-        mScannerView.startCamera();
-        List<BarcodeFormat> l = new Vector<BarcodeFormat>() ;
+        final ZBarScannerView mScannerView = (ZBarScannerView) findViewById(R.id.zbarView);
+        List<BarcodeFormat> l = new Vector<BarcodeFormat>();
         l.add(BarcodeFormat.QRCODE);
         mScannerView.setFormats(l);
-
-        mScannerView.setOnClickListener(new View.OnClickListener() {
-
+        mScannerView.startCamera();
+        View v = findViewById(R.id.v_root);
+        v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mScannerView.stopCamera();
                 mScannerView.startCamera();
             }
-
-
         });
-        mScannerView.setupLayout();
-
         mScannerView.setResultHandler(new ZBarScannerView.ResultHandler() {
             @Override
             public void handleResult(Result result) {
-                Toast.makeText(MainActivity.this, result.getContents().toString(), Toast.LENGTH_SHORT).show();
-               // mScannerView.stopCamera();
+                String s = result.getContents();
+                Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
                 mScannerView.startCamera();
             }
         });
+
 
     }
 
