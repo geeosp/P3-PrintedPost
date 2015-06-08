@@ -5,10 +5,20 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.appevents.AppEventsLogger;
 import com.parse.ParseUser;
+
+import java.util.List;
+import java.util.Vector;
+
+import me.dm7.barcodescanner.zbar.BarcodeFormat;
+import me.dm7.barcodescanner.zbar.Result;
+import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -19,8 +29,34 @@ public class MainActivity extends ActionBarActivity {
         // Logs 'install' and 'app activate' App Events.
         AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_main);
-        TextView editText = (TextView) findViewById(R.id.et_hello);
-        editText.setText(ParseUser.getCurrentUser().getEmail());
+        // TextView editText = (TextView) findViewById(R.id.et_hello);
+        //editText.setText(ParseUser.getCurrentUser().getEmail());
+         final ZBarScannerView mScannerView = (ZBarScannerView) findViewById(R.id.zbarView);
+        mScannerView.startCamera();
+        List<BarcodeFormat> l = new Vector<BarcodeFormat>() ;
+        l.add(BarcodeFormat.QRCODE);
+        mScannerView.setFormats(l);
+
+        mScannerView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                mScannerView.stopCamera();
+                mScannerView.startCamera();
+            }
+
+
+        });
+        mScannerView.setupLayout();
+
+        mScannerView.setResultHandler(new ZBarScannerView.ResultHandler() {
+            @Override
+            public void handleResult(Result result) {
+                Toast.makeText(MainActivity.this, result.getContents().toString(), Toast.LENGTH_SHORT).show();
+               // mScannerView.stopCamera();
+                mScannerView.startCamera();
+            }
+        });
 
     }
 

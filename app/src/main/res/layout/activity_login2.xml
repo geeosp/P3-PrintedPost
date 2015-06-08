@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:onClick="registerClick"
-        android:text="@string/register" />
+        android:text="@string/register"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/bt_enter"
@@ -24,7 +25,8 @@
         android:gravity="center"
         android:onClick="enterClick"
         android:padding="@dimen/bt_enter_padding"
-        android:text="@string/enter" />
+        android:text="@string/enter"
+        android:visibility="gone"/>
 
     <ScrollView
         android:id="@+id/sv_root"
@@ -60,10 +62,10 @@
                     android:id="@+id/et_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:text="@string/test_username"
+android:visibility="gone"
                    ><!--TODO removerText-->
                     <!--requestFocus /-->
                 </AutoCompleteTextView>
@@ -78,6 +80,7 @@
                     android:inputType="textPassword"
 
                     android:text="@string/test_password"
+                    android:visibility="gone"
                    />
                 <!--TODO removerText-->
 
@@ -90,6 +93,7 @@
                     android:clickable="true"
                     android:onClick="resetClick"
                     android:text="@string/forgot_password"
+                    android:visibility="gone"
                   />
 
                 <Button
