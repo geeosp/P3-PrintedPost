@@ -22,6 +22,8 @@ public class MainActivity extends ActionBarActivity {
         TextView editText = (TextView) findViewById(R.id.et_hello);
         editText.setText(ParseUser.getCurrentUser().getEmail());
 
+//        startActivity(new Intent(this, ScanActivity.class));
+
     }
 
     @Override

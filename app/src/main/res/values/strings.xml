@@ -47,6 +47,9 @@
     <string name="hello_world">Hello world!</string>
 
 
+    <!--ScanActivity-->
+    <string name="reader_promt">Aproxime o leitor do código QR</string>
+
     <!--tests-->
     <string name="test_username">geeo.sp@gmail.com</string>
     <string name="test_password">12345678</string>

@@ -1,49 +1,77 @@
 package com.p3.printedpost;
 
-import com.p3.printedpost.util.SystemUiHider;
-
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
 
+import com.google.zxing.ResultPoint;
+import com.journeyapps.barcodescanner.BarcodeCallback;
+import com.journeyapps.barcodescanner.BarcodeResult;
+import com.journeyapps.barcodescanner.CompoundBarcodeView;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- *
- * @see SystemUiHider
- */
+import java.util.List;
+
 public class ScanActivity extends Activity {
+    private CompoundBarcodeView barcodeView;
+
+    private BarcodeCallback callback = new BarcodeCallback() {
+        @Override
+        public void barcodeResult(BarcodeResult result) {
+            if (result.getText() != null) {
+                // colocar na tela a msg lida
+                barcodeView.setStatusText(result.getText());
+                Log.v("log", "SCANNER: " + result.getText());
+                // aqui eh onde pega o texto
+            }
+        }
+
+        @Override
+        public void possibleResultPoints(List<ResultPoint> resultPoints) {
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_scan);
 
-        Intent intent = new Intent("com.google.zxing.client.android.SCAN");
-        intent.addCategory(Intent.CATEGORY_DEFAULT);
-        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        barcodeView = (CompoundBarcodeView) findViewById(R.id.barcode_scanner);
+        barcodeView.setStatusText(getString(R.string.reader_promt));
+        barcodeView.decodeContinuous(callback);
 
-        startActivityForResult(intent, 0);
     }
 
-    public void onActivityResult(int requestCode,int resultCode,Intent intent){
-        if (resultCode == RESULT_OK) {
-            String code = intent.getStringExtra("SCAN_RESULT");
-            String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-            // faz o que quiser aqui com a string lida
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-            Toast.makeText(getApplicationContext(), (code),
-                    Toast.LENGTH_LONG).show();
-
-        } else if (resultCode == RESULT_CANCELED) {
-            // deu merda
-            Toast.makeText(getApplicationContext(), "ERROR!",
-                    Toast.LENGTH_LONG).show();
-        }
+        barcodeView.resume();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        barcodeView.pause();
+    }
+
+    public void pause(View view) {
+        barcodeView.pause();
+    }
+
+    public void resume(View view) {
+        barcodeView.resume();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return barcodeView.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
+    }
+
+    public void previousActivity(View view) {
+        Log.v("log", "clicou");
+    }
 }
