@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.p3.printedpost">
+    package="com.p3.printedpost" >
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -15,7 +15,7 @@
         android:name=".PrintedPost"
         android:allowBackup="true"
         android:label="@string/app_name"
-        android:theme="@style/MyTheme">
+        android:theme="@style/MyTheme" >
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -24,21 +24,17 @@
             android:name=".ScanActivity"
             android:label="ScanActivity" >
         </activity>
-
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <activity
             android:name=".RegisterActivity"
             android:label="@string/app_name" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/app_name"
-
-            >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -47,11 +43,19 @@
         </activity>
         <activity
             android:name=".ResetPasswordActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTask"></activity>
+            android:launchMode="singleTask" />
+        <activity
+            android:name=".SwipeActivity"
+            android:label="@string/title_activity_swipe" >
+        </activity>
+        <activity
+            android:name=".teste.ActivityTesteeee"
+            android:label="@string/title_activity_activity_testeeee" >
+        </activity>
     </application>
 
 </manifest>
