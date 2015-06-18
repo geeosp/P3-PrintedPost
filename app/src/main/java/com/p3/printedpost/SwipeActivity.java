@@ -16,8 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+
+
+
 
 public class SwipeActivity extends AppCompatActivity {
 
@@ -38,10 +39,20 @@ public class SwipeActivity extends AppCompatActivity {
 
 
 
+
+
+
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe);
+
+
+
 
 
         // Create the adapter that will return a fragment for each of the three
