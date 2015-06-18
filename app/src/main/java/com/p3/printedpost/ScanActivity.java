@@ -26,6 +26,7 @@ public class ScanActivity extends Activity {
                 // aqui eh onde pega o texto
             }
         }
+        
 
         @Override
         public void possibleResultPoints(List<ResultPoint> resultPoints) {
