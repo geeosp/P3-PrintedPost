@@ -23,6 +23,7 @@ public class MainActivity extends ActionBarActivity {
         editText.setText(ParseUser.getCurrentUser().getEmail());
 
 //        startActivity(new Intent(this, ScanActivity.class));
+                startActivity(new Intent(this, SwipeActivity.class));
 
     }
 
