@@ -61,6 +61,9 @@
     <string name="title_section3">Section 3</string>
     <string name="title_activity_scan_fragment">ScanFragment</string>
     <string name="title_activity_activity_testeeee">ActivityTesteeee</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     "
 
 
