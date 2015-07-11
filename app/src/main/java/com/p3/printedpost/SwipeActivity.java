@@ -138,6 +138,7 @@ public class SwipeActivity extends AppCompatActivity {
 
         }
 
+
         @Override
         public int getCount() {
             // Show 3 total pages.
@@ -150,11 +151,8 @@ public class SwipeActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     return getString(R.string.title_section1).toUpperCase(l);
-
-
                 case 1:
                     return getString(R.string.title_section2).toUpperCase(l);
-
 
             }
             return null;

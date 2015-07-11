@@ -4,6 +4,7 @@
     android:background="@color/red_300">
 
     <!-- TODO: Update blank fragment layout -->
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_recents"
         android:scrollbars="vertical"
