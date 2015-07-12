@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--   É assim que se faz um comentário   -->
-    <!-- declarações comuns:
-        criacao da cor:
-    <color name="nome_da_cor_seme_espaço">#123ABC</color>
-            ou
-            referencia à cor
-    <color name="nome_da_cor">@color/cor_ja_definida</color>
-    -->
-
-    <!--referenciem as cores aqui-->
-    <!-- main-->
-
-
+   <color name="color_primary">@color/blue_500</color>
+    <color name="color_primary_dark">@color/blue_700</color>
 
 
 

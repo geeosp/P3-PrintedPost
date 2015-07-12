@@ -66,19 +66,20 @@ public Comment(){
     }
     public void doLike() {
         increment("up");
-
+        increment("rating");
     }
     public void doDislike() {
         increment("down");
-
+        increment("rating", -1);
     }
     public void undoLike() {
         increment("up", -1);
-
+        increment("rating", -1);
  }
 
     public void undoDislike() {
         increment("down", -1);
+        increment("rating");
 
     }
 

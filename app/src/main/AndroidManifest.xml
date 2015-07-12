@@ -45,7 +45,7 @@
             android:label="@string/title_activity_swipe" >
         </activity>
         <activity
-            android:name=".parseObjects.ArticleActivity"
+            android:name=".ArticleActivity"
             android:label="@string/title_activity_article"
             android:parentActivityName=".SwipeActivity" >
             <meta-data

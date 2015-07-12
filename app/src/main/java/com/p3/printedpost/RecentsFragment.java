@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.github.curioustechizen.ago.RelativeTimeTextView;
 import com.p3.printedpost.parseObjects.Article;
-import com.p3.printedpost.parseObjects.ArticleActivity;
 
 import java.util.Vector;
 
