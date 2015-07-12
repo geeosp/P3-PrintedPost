@@ -15,9 +15,12 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.facebook.FacebookSdk;
+import com.p3.printedpost.parseObjects.Article;
+import com.p3.printedpost.parseObjects.Comment;
+import com.p3.printedpost.parseObjects.PrintUser;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
-import com.parse.ParseUser;
+import com.parse.ParseObject;
 
 /**
  * Created by Geovane on 01/03/2015.
@@ -27,9 +30,16 @@ public class PrintedPost extends Application {
 
     public void onCreate() {
         fachada = new Fachada();
+        Parse.enableLocalDatastore(this);
+        ParseObject.registerSubclass(PrintUser.class);
+        ParseObject.registerSubclass(Comment.class);
+        ParseObject.registerSubclass(Article.class);
         Parse.initialize(this, "hGNzYptoQo0eLE4NNjYrom3xoRvr6zeNPkhUtSbI", "SP1UR3W9A41NPH1plxDOSzXKgJVezcavMu7zeUtB");
         FacebookSdk.sdkInitialize(getApplicationContext());
         ParseFacebookUtils.initialize(this);
+
+
+
      //   ParseUser.logOut();
 
         try {

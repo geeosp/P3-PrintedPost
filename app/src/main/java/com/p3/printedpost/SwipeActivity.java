@@ -46,14 +46,39 @@ public class SwipeActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    ScanFragment fscan = (ScanFragment) mSectionsPagerAdapter.getItem(0);
+                    if (fscan != null)
+                        fscan.resume();
+                } else {
+                    ScanFragment fscan = (ScanFragment) mSectionsPagerAdapter.getItem(0);
+                    if (fscan != null)
+                        fscan.pause();
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 
     public void openRecents(View v) {
+        ScanFragment fscan = (ScanFragment) mSectionsPagerAdapter.getItem(0);
+        if (fscan != null)
+            fscan.pause();
         mViewPager.setCurrentItem(1);
-        ;
-        Log.d("Geeo", "openrecents clicked");
+                Log.d("Geeo", "openrecents clicked");
     }
 
     @Override

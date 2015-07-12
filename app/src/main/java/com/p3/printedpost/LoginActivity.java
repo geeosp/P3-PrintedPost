@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,15 +22,20 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 
+import com.p3.printedpost.parseObjects.PrintUser;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 
+import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -189,30 +196,84 @@ public class LoginActivity extends Activity {
 
 
     public void setEmailAndUserNameToServer() {
-        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(
-                    JSONObject object,
-                    GraphResponse response) {
-                Log.e("oi", object.toString());
-                ParseUser user = ParseUser.getCurrentUser();
-                try{
-                    String email = object.getString("email");
-                    String name = object.getString("name");
-                    user.setEmail(email);
-                    user.put("name", name);
-                    user.saveInBackground();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
 
-        });
+        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+                        Log.e("oi", object.toString());
+                        PrintUser user = PrintUser.getCurrentUser();
+                        String name = "", email = "";
+                        try {
+                            name = object.getString("name");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            email = object.getString("email");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        user.put("name", name);
+                        try {
+                            user.setEmail(email);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        user.saveInBackground();
+                        try {
+                            String userid = object.getString("id");
+                            saveFacebookPhoto(userid);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
         Bundle parameters = new Bundle();
         parameters.putString("fields", "name, email");
         request.setParameters(parameters);
-
         request.executeAsync();
 
+
+    }
+
+    void saveFacebookPhoto(String userid) {
+        final String id = userid;
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap bitmap = null;
+                try {
+                    URL imageUrl = new URL("https://graph.facebook.com/" + id + "/picture?type=large");
+                    bitmap = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+                    final ParseFile fotofile = new ParseFile("photo.png", byteArray);
+                    Log.e("Facebook", "Salvando foto..");
+                    fotofile.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            PrintUser current = PrintUser.getCurrentUser();
+                            current.put("photo", fotofile);
+                            current.saveEventually(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    Log.e("Facebook", "Foto salva");
+                                }
+                            });
+
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Log.e("ok", "ok");
+
+            }
+        });
+        t.start();
     }
 }
