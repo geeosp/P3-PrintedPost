@@ -1,41 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<com.balysv.materialripple.MaterialRippleLayout
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingTop="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
 
-    <com.github.curioustechizen.ago.RelativeTimeTextView
-        android:id="@+id/tv_article_date"
-        android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="date"
-        android:textSize="12dp" />
+        android:layout_width="match_parent">
 
-    <TextView
-        android:id="@+id/tv_article_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/tv_article_date"
-        android:text="article title"
-        android:textSize="22dp" />
+        <com.github.curioustechizen.ago.RelativeTimeTextView
+            android:id="@+id/tv_article_date"
+            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="date"
+            android:textSize="12dp" />
 
-    <TextView
-        android:id="@+id/tv_article_exerpt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@id/tv_article_title"
-        android:text="article_exerpt"
-        android:textSize="18dp" />
+        <TextView
+            android:id="@+id/tv_article_title"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/tv_article_date"
+            android:layout_width="match_parent"
+            android:text="article title"
+            android:textSize="22dp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_below="@id/tv_article_exerpt"
-        android:background="@color/background_material_dark" />
+        <TextView
+            android:id="@+id/tv_article_exerpt"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/tv_article_title"
+            android:layout_height="30dp"
+            android:layout_width="match_parent"
+            android:text="article_execrpt"
+            android:maxLines="1"
+            android:ellipsize="marquee"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:textSize="18dp" />
 
-</RelativeLayout>
+        <View
+            android:background="@color/background_material_dark"
+            android:layout_below="@id/tv_article_exerpt"
+            android:layout_height="1px"
+            android:layout_width="match_parent" />
+    </RelativeLayout>
+
+</com.balysv.materialripple.MaterialRippleLayout>
+
+
+

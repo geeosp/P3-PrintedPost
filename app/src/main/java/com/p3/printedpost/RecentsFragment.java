@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.github.curioustechizen.ago.RelativeTimeTextView;
 import com.p3.printedpost.parseObjects.Article;
+import com.balysv.materialripple.MaterialRippleLayout;
 
 import java.util.Vector;
 

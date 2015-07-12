@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <color name="color_primary">@color/blue_500</color>
+    <color name="color_primary">@color/blue_500</color>
     <color name="color_primary_dark">@color/blue_700</color>
 
 
+    <color name="test_appbackground">#e5e5e5</color>
+    <color name="test_appactionbarbackgtound">#0095d2</color>
+    <color name="actionbarcolor">@color/color_primary</color>
 
 
+    <color name="actionbar_text">@color/white</color>
+    <color name="app_background">@color/white</color>
+    <color name="half_white">#88ffffff</color>
 
 
     >
