@@ -3,10 +3,13 @@ package com.p3.printedpost;
 import android.app.Activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +25,9 @@ import java.util.Vector;
  */
 public class RecentsFragment extends Fragment {
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private RecentsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public RecentsFragment() {
     }
@@ -49,33 +53,20 @@ public class RecentsFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        swipeRefreshLayout = (SwipeRefreshLayout) getActivity().findViewById(R.id.srl_recents);
         // specify an adapter (see also next example)
-        mAdapter = new RecentsAdapter(getActivity());
+        mAdapter = new RecentsAdapter(getActivity(), swipeRefreshLayout);
         mRecyclerView.setAdapter(mAdapter);
-
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
 
     }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-
-    }
-
-    public void pause(View view) {
-
-    }
-
-    public void resume(View view) {
-
+    public void refresh() {
+        mAdapter.refresh();
     }
 
 
@@ -84,6 +75,7 @@ public class RecentsFragment extends Fragment {
 class RecentsAdapter extends RecyclerView.Adapter<RecentsAdapter.ViewHolder> {
     Vector<Article> articles = new Vector<Article>();
     Activity ctx;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -123,10 +115,56 @@ class RecentsAdapter extends RecyclerView.Adapter<RecentsAdapter.ViewHolder> {
 
     }
 
+    public void refresh() {
+        AsyncTask asyncTask = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] params) {
+                ctx.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        swipeRefreshLayout.setRefreshing(true);
+                    }
+                });
+
+                PrintedPost.fachada.updateArticles();
+                Log.d("Refresh", "Refreshing started");
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                Log.d("Refresh", "Refreshing Finished");
+                articles = PrintedPost.fachada.getArticles();
+                notifyDataSetChanged();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        };
+        asyncTask.execute();
+
+
+    }
+
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RecentsAdapter(Activity activity) {
+    public RecentsAdapter(Activity activity, SwipeRefreshLayout swipeRefreshLayout) {
         articles = PrintedPost.fachada.getArticles();
         this.ctx = activity;
+        this.swipeRefreshLayout = swipeRefreshLayout;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                PrintedPost.fachada.updateArticles();
+                ctx.runOnUiThread(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                notifyDataSetChanged();
+                                Log.e("ADAPTER", "data changed notified");
+                            }
+                        }
+                );
+            }
+        }).start();
     }
 
     // Create new views (invoked by the layout manager)
