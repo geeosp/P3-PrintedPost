@@ -3,6 +3,7 @@ package com.p3.printedpost;
 import android.util.Log;
 
 import com.p3.printedpost.parseObjects.Article;
+import com.p3.printedpost.parseObjects.Comment;
 import com.p3.printedpost.parseObjects.PrintUser;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -116,6 +117,74 @@ public class Fachada implements FachadaInterface {
             Log.e("InterruptedException", e.getMessage());
         }
     }
+    public Vector<Comment> getComments(final Article article) {
+        final Vector<Comment> lu = new Vector<Comment>();
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ParseQuery<Comment> query = ParseQuery.getQuery("Comment");
+                try {
+                    query.fromLocalDatastore();
+                    query.whereEqualTo("article", article);
+                    query.orderByAscending("createdAt");
+                    List<Comment> lq = query.find();
+                    Iterator<Comment> i = lq.iterator();
+                    while (i.hasNext()) {
+                        lu.add(i.next());
+                    }
+                } catch (ParseException e) {
+                    Log.e("ParseException", e.getMessage());
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            Log.e("InterruptedException", e.getMessage());
+        }
+        Log.e("TamanhoDaBase", "" + lu.size());
+        return lu;
+    }
+
+    public void updateComments(final Article article) {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.e("FACHADA",  "updating comments...");
+                ParseQuery<Comment> query = ParseQuery.getQuery("Comment");
+                query.whereEqualTo("article", article);
+                try {
+                    Log.e("Entrou", "Aqui");
+                    List<Comment> lq = query.find();
+                    Iterator<Comment> i = lq.iterator();
+                    while (i.hasNext()) {
+                        i.next().pin();
+                    }
+                    PrintUser.getCurrentUser().pin();
+                    Log.e("FACHADA", "comments updated, size: "+lq.size());
+                } catch (ParseException e){
+                    Log.e("ParseException", e.getMessage());
+                } catch (Exception e)                {
+                    e.printStackTrace();
+                }
+            }
+        });
+        t.start();
+        try {
+            t.join();
+        } catch (InterruptedException e) {
+            Log.e("InterruptedException", e.getMessage());
+        }
+    }
+
+
+
+
+
+
+
+
 
 
 }
