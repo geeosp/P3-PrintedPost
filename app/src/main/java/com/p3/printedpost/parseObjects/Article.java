@@ -10,7 +10,14 @@ import java.util.Date;
  */
 @ParseClassName("Article")
 public class Article extends ParseObject {
-public Article(){}
+    public Article() {
+    }
+
+      public Article(String title, String excerpt) {
+        setTitle(title);
+        setExcerpt(excerpt);
+    }
+
     public String getTitle() {
         return getString("title");
     }
@@ -19,11 +26,20 @@ public Article(){}
         return getString("excerpt");
     }
 
+    public void setTitle(String title) {
+        put("title", title);
+    }
+
+    public void setExcerpt(String excerpt) {
+        put("excerpt", excerpt);
+    }
+
     @Override
     public Date getCreatedAt() {
         return super.getCreatedAt();
     }
-//another commit
+
+    //another commit
     @Override
     public String getObjectId() {
         return super.getObjectId();

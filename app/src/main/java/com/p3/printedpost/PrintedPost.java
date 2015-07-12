@@ -1,16 +1,10 @@
 package com.p3.printedpost;
 
 import android.app.Application;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
-
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
-
 import android.util.Base64;
 import android.util.Log;
 
@@ -21,6 +15,10 @@ import com.p3.printedpost.parseObjects.PrintUser;
 import com.parse.Parse;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
+import com.parse.ParseRelation;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by Geovane on 01/03/2015.
@@ -37,10 +35,29 @@ public class PrintedPost extends Application {
         Parse.initialize(this, "hGNzYptoQo0eLE4NNjYrom3xoRvr6zeNPkhUtSbI", "SP1UR3W9A41NPH1plxDOSzXKgJVezcavMu7zeUtB");
         FacebookSdk.sdkInitialize(getApplicationContext());
         ParseFacebookUtils.initialize(this);
+/*
+        if (PrintUser.getCurrentUser() != null) {
+            Article[] articles = new Article[20];
+            ParseRelation<Article> articleParseRelation = PrintUser.getCurrentUser().getRelation("articles");
+            for (int i = 0; i < 20; i++) {
+                try {
+                    Log.e("INIT", "creating article" + i);
+                    articles[i] = new Article("Title " + i, i + " resumindo isso...");
+                    Log.e("INIT", "saving article" + i);
+                    articles[i].save();
+                    Log.e("INIT", "adding in relationship " + i);
+                    if (i % 2 == 0)
+                        articleParseRelation.add(articles[i]);
+                    Log.e("INIT", "added in relationship " + i);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
+            }
+        }
+*/
 
-
-     //   ParseUser.logOut();
+        //   ParseUser.logOut();
 
         try {
 

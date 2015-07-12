@@ -122,7 +122,7 @@ public class LoginActivity extends Activity {
                 progressDialog.dismiss();
                 if (user != null) {
                     Log.e("PARSE", "Login sucess");
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, SwipeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 } else {
@@ -182,12 +182,12 @@ public class LoginActivity extends Activity {
                     Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
                 } else if (user.isNew()) {
                     Log.d("MyApp", "User signed up and logged in through Facebook!");
-                    setEmailAndUserNameToServer();
+             //       setEmailAndUserNameToServer();
                     openMain();
 
                 } else {
                     Log.d("MyApp", "User logged in through Facebook!");
-                    setEmailAndUserNameToServer();
+              //      setEmailAndUserNameToServer();
                     openMain();
                 }
             }
@@ -195,85 +195,5 @@ public class LoginActivity extends Activity {
     }
 
 
-    public void setEmailAndUserNameToServer() {
 
-        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(
-                            JSONObject object,
-                            GraphResponse response) {
-                        Log.e("oi", object.toString());
-                        PrintUser user = PrintUser.getCurrentUser();
-                        String name = "", email = "";
-                        try {
-                            name = object.getString("name");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            email = object.getString("email");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        user.put("name", name);
-                        try {
-                            user.setEmail(email);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        user.saveInBackground();
-                        try {
-                            String userid = object.getString("id");
-                            saveFacebookPhoto(userid);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-        );
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "name, email");
-        request.setParameters(parameters);
-        request.executeAsync();
-
-
-    }
-
-    void saveFacebookPhoto(String userid) {
-        final String id = userid;
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Bitmap bitmap = null;
-                try {
-                    URL imageUrl = new URL("https://graph.facebook.com/" + id + "/picture?type=large");
-                    bitmap = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
-                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                    byte[] byteArray = stream.toByteArray();
-                    final ParseFile fotofile = new ParseFile("photo.png", byteArray);
-                    Log.e("Facebook", "Salvando foto..");
-                    fotofile.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e) {
-                            PrintUser current = PrintUser.getCurrentUser();
-                            current.put("photo", fotofile);
-                            current.saveEventually(new SaveCallback() {
-                                @Override
-                                public void done(ParseException e) {
-                                    Log.e("Facebook", "Foto salva");
-                                }
-                            });
-
-                        }
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                Log.e("ok", "ok");
-
-            }
-        });
-        t.start();
-    }
 }

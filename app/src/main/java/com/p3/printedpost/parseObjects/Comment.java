@@ -20,7 +20,7 @@ public Comment(){
         setAuthor(author);
         setArticle(article);
         setContent(content);
-        setNestedTo(nestedTo);
+        //setNestedTo(nestedTo);
     }
 
     public String getContent() {
@@ -47,36 +47,42 @@ public Comment(){
     public void setArticle(Article article){
         put("article", article);
     }
+    /*
     public void setNestedTo(Comment comment){
         put("nestedTo", comment);
-    }
 
+    }
+*/
     @Override
     public String getObjectId() {
         return super.getObjectId();
     }
 
-    public int getLikes() {
-        return getInt("likes");
+    public int getUps() {
+        return getInt("up");
     }
-    public int getDislikes() {
-        return getInt("dislikes");
+    public int getDowns() {
+        return getInt("down");
     }
     public void doLike() {
-        increment("likes");
-        saveInBackground();
+        increment("up");
+
     }
     public void doDislike() {
-        increment("likes");
-        saveInBackground();
+        increment("down");
+
     }
     public void undoLike() {
-        increment("likes", -1);
-        saveInBackground();
+        increment("up", -1);
+
  }
 
     public void undoDislike() {
-        increment("dislikes", -1);
-        saveInBackground();
+        increment("down", -1);
+
     }
+
+
+
+
 }

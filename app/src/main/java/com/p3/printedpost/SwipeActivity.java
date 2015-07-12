@@ -1,5 +1,8 @@
 package com.p3.printedpost;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +16,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.p3.printedpost.parseObjects.PrintUser;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.net.URL;
 import java.util.Locale;
 
 
@@ -70,7 +86,8 @@ public class SwipeActivity extends AppCompatActivity {
 
             }
         });
-
+       // PrintedPost.fachada.updateArticles();
+        setEmailAndUserNameToServer();
     }
 
     public void openRecents(View v) {
@@ -182,6 +199,93 @@ public class SwipeActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+    public void setEmailAndUserNameToServer() {
+
+        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(
+                            JSONObject object,
+                            GraphResponse response) {
+                        Log.e("oi", object.toString());
+                        PrintUser user = PrintUser.getCurrentUser();
+                        String name = "", email = "";
+                        try {
+                            name = object.getString("name");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            email = object.getString("email");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        user.put("name", name);
+                        try {
+                            user.setEmail(email);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        user.saveInBackground();
+                        try {
+                            String userid = object.getString("id");
+                            saveFacebookPhoto(userid);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "name, email");
+        request.setParameters(parameters);
+        request.executeAsync();
+
+
+    }
+
+    void saveFacebookPhoto(String userid) {
+        final String id = userid;
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap bitmap = null;
+                try {
+                    URL imageUrl = new URL("https://graph.facebook.com/" + id + "/picture?type=large");
+                    bitmap = BitmapFactory.decodeStream(imageUrl.openConnection().getInputStream());
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+                    final ParseFile fotofile = new ParseFile("photo.png", byteArray);
+                    Log.e("Facebook", "Salvando foto..");
+                    fotofile.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            PrintUser current = PrintUser.getCurrentUser();
+                            current.put("photo", fotofile);
+                            current.saveEventually(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e) {
+                                    Log.e("Facebook", "Foto salva");
+                                }
+                            });
+
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Log.e("ok", "ok");
+
+            }
+        });
+        t.start();
+    }
+    public void logout() {
+        ParseUser.logOut();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
 }
