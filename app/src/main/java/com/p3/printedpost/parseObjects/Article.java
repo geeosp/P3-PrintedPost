@@ -23,7 +23,7 @@ public Article(){}
     public Date getCreatedAt() {
         return super.getCreatedAt();
     }
-
+//another commit
     @Override
     public String getObjectId() {
         return super.getObjectId();
