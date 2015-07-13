@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -155,8 +156,8 @@ class RepliesAdapter extends RecyclerView.Adapter<RepliesAdapter.ViewHolder> {
         public TextView tv_comment;
         public TextView tv_up_cont;
         public TextView tv_down_cont;
-        public Button bt_up;
-        public Button bt_down;
+        public ImageButton bt_up;
+        public ImageButton bt_down;
         public Button bt_reply;
         public SimpleDraweeView iv_user_photo;
         Activity ctx;
@@ -169,8 +170,8 @@ class RepliesAdapter extends RecyclerView.Adapter<RepliesAdapter.ViewHolder> {
             tv_comment = (TextView) v.findViewById(R.id.tv_comment);
             tv_up_cont = (TextView) v.findViewById(R.id.tv_up_cont);
             tv_down_cont = (TextView) v.findViewById(R.id.tv_down_cont);
-            bt_up = (Button) v.findViewById(R.id.bt_up);
-            bt_down = (Button) v.findViewById(R.id.bt_down);
+            bt_up = (ImageButton) v.findViewById(R.id.bt_up);
+            bt_down = (ImageButton) v.findViewById(R.id.bt_down);
             bt_reply = (Button) v.findViewById(R.id.bt_reply);
             iv_user_photo = (SimpleDraweeView) v.findViewById(R.id.iv_user_photo);
             root = v;

@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
+    android:background="@color/grey_200"
     android:orientation="vertical"
-    tools:context="com.p3.printedpost.CommentActivity">
+    tools:context="com.p3.printedpost.ArticleActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -16,7 +17,7 @@
         app:contentInsetEnd="0dp"
         app:contentInsetStart="0dp"
         app:popupTheme="@style/Theme.AppCompat.NoActionBar"
-        app:title="User_name">
+        app:title="Article_title">
 
     </android.support.v7.widget.Toolbar>
 
@@ -52,10 +53,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/blue_100"
+        android:background="@color/brown_100"
         android:gravity="bottom"
         android:orientation="horizontal"
-
         android:padding="5dp">
 
 
@@ -71,16 +71,19 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="2"   >
 
-            >
-
-            <Button
+            <ImageButton
                 android:id="@+id/iv_send"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:onClick="send"
-
+                android:src="@drawable/ic_send_white_24dp"
+                android:layout_gravity="right"
+                android:background="@drawable/oval"
+                android:padding="12dp"
                 />
 
         </LinearLayout>
