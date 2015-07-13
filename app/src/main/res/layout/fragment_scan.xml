@@ -17,6 +17,7 @@
         android:id="@+id/rl_notifications"
         android:layout_alignParentRight="true"
         android:layout_margin="20dp"
+        android:visibility="gone"
         >
         <ImageButton
             android:layout_width="match_parent"
