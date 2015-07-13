@@ -2,7 +2,7 @@
 <resources>
     <color name="color_primary">@color/blue_500</color>
     <color name="color_primary_dark">@color/blue_700</color>
-    <color name="color_accent">#F44336</color>
+    <color name="color_accent">#EF5350</color>
 
     <color name="test_appbackground">#e5e5e5</color>
     <color name="test_appactionbarbackgtound">#0095d2</color>
