@@ -91,7 +91,7 @@ public class CommentActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_comment, menu);
         return true;
     }
-
+//lastCommit
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
