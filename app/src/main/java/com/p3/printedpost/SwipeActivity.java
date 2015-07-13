@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -48,7 +50,7 @@ public class SwipeActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
-
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,10 @@ public class SwipeActivity extends AppCompatActivity {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
+        toolbar = (Toolbar) findViewById(R.id.as_toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(R.string.app_name);
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -86,7 +91,7 @@ public class SwipeActivity extends AppCompatActivity {
 
             }
         });
-       // PrintedPost.fachada.updateArticles();
+        // PrintedPost.fachada.updateArticles();
         setEmailAndUserNameToServer();
     }
 
@@ -95,7 +100,7 @@ public class SwipeActivity extends AppCompatActivity {
         if (fscan != null)
             fscan.pause();
         mViewPager.setCurrentItem(1);
-                Log.d("Geeo", "openrecents clicked");
+        Log.d("Geeo", "openrecents clicked");
     }
 
     @Override
@@ -200,6 +205,7 @@ public class SwipeActivity extends AppCompatActivity {
             return null;
         }
     }
+
     public void setEmailAndUserNameToServer() {
 
         GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
@@ -281,6 +287,7 @@ public class SwipeActivity extends AppCompatActivity {
         });
         t.start();
     }
+
     public void logout() {
         ParseUser.logOut();
         Intent intent = new Intent(this, LoginActivity.class);
