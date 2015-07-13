@@ -9,6 +9,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.facebook.FacebookSdk;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.p3.printedpost.parseObjects.Article;
 import com.p3.printedpost.parseObjects.Comment;
 import com.p3.printedpost.parseObjects.PrintUser;
@@ -29,6 +30,7 @@ public class PrintedPost extends Application {
     public void onCreate() {
         fachada = new Fachada();
         Parse.enableLocalDatastore(this);
+        Fresco.initialize(this);
         ParseObject.registerSubclass(PrintUser.class);
         ParseObject.registerSubclass(Comment.class);
         ParseObject.registerSubclass(Article.class);

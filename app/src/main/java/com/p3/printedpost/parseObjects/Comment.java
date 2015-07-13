@@ -8,45 +8,52 @@ import com.parse.ParseObject;
  */
 @ParseClassName("Comment")
 public class Comment extends ParseObject {
-public Comment(){
+    private String userName = "";
+    private String userPhoto = "";
+    public Comment() {
 
-}
-    public Comment(PrintUser author, Article article, String content){
+    }
+
+    public Comment(PrintUser author, Article article, String content) {
         setAuthor(author);
         setArticle(article);
         setContent(content);
+        put("up", 0);
+        put("down", 0);
+
     }
-    public Comment(PrintUser author, Article article, String content, Comment nestedTo){
-        setAuthor(author);
-        setArticle(article);
-        setContent(content);
-        //setNestedTo(nestedTo);
-    }
+
+
 
     public String getContent() {
         return getString("content");
     }
-    public PrintUser getAuthor(){
+
+    public PrintUser getAuthor() {
         return (PrintUser) getParseUser("author");
     }
-    public Article getArticle(){
+
+    public Article getArticle() {
         return (Article) getParseObject("article");
 
     }
 
-    public Comment getNestedTo(){
+    public Comment getNestedTo() {
         return (Comment) getParseObject("nestedTo");
     }
 
-    public void setContent(String content){
+    public void setContent(String content) {
         put("content", content);
     }
-    public void setAuthor(PrintUser author){
+
+    public void setAuthor(PrintUser author) {
         put("author", author);
     }
-    public void setArticle(Article article){
+
+    public void setArticle(Article article) {
         put("article", article);
     }
+
     /*
     public void setNestedTo(Comment comment){
         put("nestedTo", comment);
@@ -61,29 +68,33 @@ public Comment(){
     public int getUps() {
         return getInt("up");
     }
+
     public int getDowns() {
         return getInt("down");
     }
+
     public void doLike() {
         increment("up");
         increment("rating");
+        saveInBackground();
     }
+
     public void doDislike() {
         increment("down");
         increment("rating", -1);
+        saveInBackground();
     }
+
     public void undoLike() {
         increment("up", -1);
         increment("rating", -1);
- }
+        saveInBackground();
+    }
 
     public void undoDislike() {
         increment("down", -1);
         increment("rating");
+        saveInBackground();
 
     }
-
-
-
-
 }

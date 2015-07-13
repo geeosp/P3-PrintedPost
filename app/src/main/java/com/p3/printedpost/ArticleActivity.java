@@ -11,15 +11,20 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.github.curioustechizen.ago.RelativeTimeTextView;
 import com.p3.printedpost.parseObjects.Article;
 import com.p3.printedpost.parseObjects.Comment;
+import com.p3.printedpost.parseObjects.PrintUser;
 
 import java.util.Vector;
 
@@ -29,6 +34,7 @@ public class ArticleActivity extends AppCompatActivity {
     private CommentsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private EditText et_comment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +53,7 @@ public class ArticleActivity extends AppCompatActivity {
         tv_date.setReferenceTime(article.getCreatedAt().getTime());
         TextView tv_article_excerpt = (TextView) findViewById(R.id.tv_article_excerpt);
         tv_article_excerpt.setText(article.getExcerpt());
-
+        et_comment = (EditText) findViewById(R.id.et_comment);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_recents);
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -57,7 +63,7 @@ public class ArticleActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.srl_recents);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_recents);
         // specify an adapter (see also next example)
         mAdapter = new CommentsAdapter(this, swipeRefreshLayout, article);
         mRecyclerView.setAdapter(mAdapter);
@@ -96,6 +102,29 @@ public class ArticleActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void send(View v) {
+        if (!et_comment.getText().toString().equals("")) {
+            final Comment comment = new Comment(PrintUser.getCurrentUser(), article, et_comment.getText().toString());
+
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    comment.saveInBackground();
+                    try {
+                        comment.pin();
+                        mAdapter.refresh();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            t.run();
+            et_comment.setText("");
+
+        }
+    }
+
 }
 
 class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
@@ -111,34 +140,56 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public Comment comment;
-        public TextView tv_title;
+        public TextView tv_user_name;
         public RelativeTimeTextView tv_date;
-        public TextView tv_excerpt;
+        public TextView tv_comment;
+        public TextView tv_up_cont;
+        public TextView tv_down_cont;
+        public Button bt_up;
+        public Button bt_down;
+        public Button bt_reply;
+        public SimpleDraweeView iv_user_photo;
         Activity ctx;
 
         public ViewHolder(View v) {
             super(v);
-            tv_title = (TextView) v.findViewById(R.id.tv_article_title);
-            tv_date = (RelativeTimeTextView) v.findViewById(R.id.tv_article_date);
-            tv_excerpt = (TextView) v.findViewById(R.id.tv_article_exerpt);
-            v.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(ctx, CommentActivity.class);
-                    intent.putExtra("articleId", comment.getObjectId());
-                    ctx.startActivity(intent);
-                }
-            });
+            tv_user_name = (TextView) v.findViewById(R.id.tv_user_name);
+            tv_date = (RelativeTimeTextView) v.findViewById(R.id.tv_date);
+            tv_comment = (TextView) v.findViewById(R.id.tv_comment);
+            tv_up_cont = (TextView) v.findViewById(R.id.tv_up_cont);
+            tv_down_cont = (TextView) v.findViewById(R.id.tv_down_cont);
+            bt_up = (Button) v.findViewById(R.id.bt_up);
+            bt_down = (Button) v.findViewById(R.id.bt_down);
+            bt_reply = (Button) v.findViewById(R.id.bt_reply);
+            iv_user_photo = (SimpleDraweeView) v.findViewById(R.id.iv_user_photo);
+
+
         }
 
-        public void update(Comment comment, Activity ctx) {
+        public void update(final Comment comment, Activity ctx) {
             this.comment = comment;
             this.ctx = ctx;
-            /*
-            tv_title.setText(article.getTitle());
-            tv_excerpt.setText(article.getExcerpt());
-            tv_date.setReferenceTime(article.getCreatedAt().getTime());
-*/
+            //tv_user_name.setText(comment.g);
+            tv_date.setReferenceTime(comment.getCreatedAt().getTime());
+            tv_comment.setText(comment.getContent());
+            tv_up_cont.setText("" + comment.getUps());
+            tv_down_cont.setText("" + comment.getDowns());
+            bt_up.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    comment.doLike();
+                    tv_up_cont.setText("" + comment.getUps());
+                }
+            });
+            bt_down.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    comment.doDislike();
+                    tv_down_cont.setText("" + comment.getDowns());
+                }
+            });
+
+
         }
 
 
@@ -178,7 +229,7 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
         this.article = article;
         this.ctx = activity;
         this.swipeRefreshLayout = swipeRefreshLayout;
-
+        comments = PrintedPost.fachada.getComments(article);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -199,12 +250,15 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
 
     @Override
     public CommentsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.comment_root, parent, false);
+        ViewHolder vh = new ViewHolder(v);
+        return vh;
     }
 
     @Override
     public void onBindViewHolder(CommentsAdapter.ViewHolder holder, int position) {
-
+        holder.update(comments.elementAt(position), ctx);
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -212,4 +266,6 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
     public int getItemCount() {
         return comments.size();
     }
+
+
 }

@@ -35,4 +35,11 @@ public class PrintUser extends ParseUser {
         articles.remove(article);
     }
 
+    public String getName() {
+        return getString("name");
+    }
+
+    public String getPhotoUrl() {
+        return getParseFile("photo").getUrl();
+    }
 }
