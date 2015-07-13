@@ -1,40 +1,52 @@
 <resources>
 
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
-        <!--
-          <item name="actionBarStyle">@style/myTheme.ActionBar</item>
-          <item name="android:editTextStyle">@style/App_EditTextStyle</item>
-          <item name="actionMenuTextColor">@color/actionbar_text</item>
-          <item name="android:windowContentOverlay">@null</item>
-          <item name="android:windowBackground">@color/app_background</item>
-          <item name="android:toolbarStyle">@style/myToolbar</item>
-          -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="android:colorPrimary">@color/color_primary</item>
+
+        <item name="actionBarStyle">@style/myTheme.ActionBar</item>
+
+        <item name="actionMenuTextColor">@color/actionbar_text</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/app_background</item>
+        <item name="android:toolbarStyle">@style/myToolbar</item>
+        <item name="android:actionBarWidgetTheme">@style/widgets</item>
     </style>
+
+    <style name="widgets">
+        <item name="android:textColorHint">@color/half_white</item>
+    </style>
+
     <style name="MyTheme" parent="AppBaseTheme"></style>
-    <!--
 
 
-        <style name="myTheme.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar">
-            <item name="android:background">@color/actionbarcolor</item>
-            <item name="android:icon">@drawable/ic_launcher</item>
-            <item name="android:titleTextStyle">@style/TitleColor</item>
-            < Support library compatibility >
-            <item name="background">@color/actionbarcolor</item>
-            <item name="titleTextStyle">@style/TitleColor</item>
+    <style name="myTheme.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="android:background">@color/actionbarcolor</item>
+
+    </style>
+
+    <style name="myToolbar" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- android:textColorPrimary is the  color of the title text
+       in the Toolbar, in the Theme.AppCompat theme:  -->
+        <item name="android:textColorPrimary">@color/actionbar_text</item>
+        <item name="android:textColorHint">@color/half_white</item>
+        <!-- android:textColorPrimaryInverse is the  color of the title
+             text in the Toolbar, in the Theme.AppCompat.Light theme:  -->
+        <item name="android:textColorPrimaryInverse">@color/white</item>
+
+        <!-- android:actionMenuTextColor is the color of the text of
+              action (menu) items in the Toolbar, at least in the
+              Theme.AppCompat theme.
+              For some reason, they already get the textColorPrimary
+              when running on API 21, but not on older versions of
+              Android, so this is only necessary to support older
+              Android versions.-->
+        <item name="actionMenuTextColor">@color/white</item>
+        <!-- android:textColorSecondary is the color of the menu
+             overflow icon (three vertical dots) -->
+        <item name="android:textColorSecondary">@color/white</item>
+
+    </style>
 
 
-        </style>
-        <style name="myToolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
-
-        <style name="TitleColor" parent="TextAppearance.AppCompat.Title">
-            <item name="android:textColor">@color/actionbar_text</item>
-        </style>
-
-        <style name="App_EditTextStyle" parent="Widget.AppCompat.EditText">
-            <item name="android:textColorHint">@color/et_default_textHintColor</item>
-            <item name="android:textColor">@color/et_default_textColor</item>
-            <item name="android:textCursorDrawable">@drawable/cursor_color</item>
-            <item name="android:background">@drawable/edittext</item>
-        </style>
-    -->
 </resources>

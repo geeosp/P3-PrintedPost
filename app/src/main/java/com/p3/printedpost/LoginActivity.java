@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -20,15 +22,20 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 
+import com.p3.printedpost.parseObjects.PrintUser;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 
+import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -115,7 +122,7 @@ public class LoginActivity extends Activity {
                 progressDialog.dismiss();
                 if (user != null) {
                     Log.e("PARSE", "Login sucess");
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, SwipeActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 } else {
@@ -155,7 +162,7 @@ public class LoginActivity extends Activity {
     }
 
     public void openMain() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(LoginActivity.this, SwipeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
@@ -175,12 +182,12 @@ public class LoginActivity extends Activity {
                     Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
                 } else if (user.isNew()) {
                     Log.d("MyApp", "User signed up and logged in through Facebook!");
-                    setEmailAndUserNameToServer();
+             //       setEmailAndUserNameToServer();
                     openMain();
 
                 } else {
                     Log.d("MyApp", "User logged in through Facebook!");
-                    setEmailAndUserNameToServer();
+              //      setEmailAndUserNameToServer();
                     openMain();
                 }
             }
@@ -188,31 +195,5 @@ public class LoginActivity extends Activity {
     }
 
 
-    public void setEmailAndUserNameToServer() {
-        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(
-                    JSONObject object,
-                    GraphResponse response) {
-                Log.e("oi", object.toString());
-                ParseUser user = ParseUser.getCurrentUser();
-                try{
-                    String email = object.getString("email");
-                    String name = object.getString("name");
-                    user.setEmail(email);
-                    user.put("name", name);
-                    user.saveInBackground();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
 
-        });
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "name, email");
-        request.setParameters(parameters);
-
-        request.executeAsync();
-
-    }
 }
