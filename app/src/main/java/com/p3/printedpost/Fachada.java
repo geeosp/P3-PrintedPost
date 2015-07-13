@@ -144,12 +144,12 @@ public class Fachada implements FachadaInterface {
                     query.whereEqualTo("level", 0);
                     switch(choose){
                         case OLDERFIRST:
-                            query.orderByAscending("createdAt,down");
-                            query.orderByDescending("up");
+                            query.orderByAscending("createdAt");
+//                            query.orderByDescending("up");
                             break;
                         case NEWERFIRST:
                             query.orderByAscending("down");
-                            query.orderByDescending("createdAt, up");
+                            query.orderByDescending("createdAt,up");
                             break;
                         case LIKESFIRST:
                             query.orderByAscending("down");

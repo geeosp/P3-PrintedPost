@@ -8,6 +8,11 @@
     <string name="action_settings">Configurações</string>
     <string name="action_logout">Sair</string>
 
+    <string name="order_by">Ordenar comentários por...</string>
+    <string name="by_newest">Mais recente</string>
+    <string name="by_oldest">Mais antigo</string>
+    <string name="by_coolest">Mais popular</string>
+
     <!--LoginActivity-->
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email_or_username">Email ou  username</string>

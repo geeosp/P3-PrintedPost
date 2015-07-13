@@ -2,6 +2,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.p3.printedpost.ArticleActivity">
+    <item android:id="@+id/order_by"
+        android:title="@string/order_by"
+        android:orderInCategory="100"
+        app:showAsAction="never">
+        <menu>
+            <item android:id="@+id/by_oldest"
+                android:title="@string/by_oldest"
+                />
+            <item android:id="@+id/by_newest"
+                android:title="@string/by_newest" />
+
+            <item android:id="@+id/by_coolest"
+                android:title="@string/by_coolest" />
+        </menu>
+        </item>
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>
