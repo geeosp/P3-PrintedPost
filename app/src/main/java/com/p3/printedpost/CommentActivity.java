@@ -2,6 +2,7 @@ package com.p3.printedpost;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -118,7 +119,10 @@ public class CommentActivity extends AppCompatActivity {
                     try {
                         newComment.pin();
                         ParseRelation<Comment> replies = comment.getRelation("replies");
+                        comment.increment("repliescount");
+                        comment.saveInBackground();
                         replies.add(newComment);
+                        newComment.saveInBackground();
                         mAdapter.refresh();
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -212,7 +216,8 @@ class RepliesAdapter extends RecyclerView.Adapter<RepliesAdapter.ViewHolder> {
                     ctx.startActivity(intent);
                 }
             });
-
+            tv_user_name.setText(comment.getUserName());
+            iv_user_photo.setImageURI(Uri.parse(comment.getUserPhoto()));
         }
 
 

@@ -21,6 +21,9 @@ public class Comment extends ParseObject {
         put("up", 0);
         put("down", 0);
         put("level", 0);
+        put("repliescount", 0);
+        put("authorname", author.getName());
+        put("authorphoto", author.getPhotoUrl());
     }
 
     public Comment(PrintUser author, Comment comment, String content) {
@@ -29,7 +32,11 @@ public class Comment extends ParseObject {
         setContent(content);
         put("up", 0);
         put("down", 0);
+        put("repliescount", 0);
         put("level", comment.getLevel()+1);
+        put("repliescount", 0);
+        put("authorname", author.getName());
+        put("authorphoto", author.getPhotoUrl());
     }
     public int getLevel(){
         return getInt("level");
@@ -48,8 +55,16 @@ public class Comment extends ParseObject {
         return (Article) getParseObject("article");
 
     }
+    public String getUserName(){
+        return getString("authorname");
+    }
+    public String getUserPhoto(){
+        return getString("authorphoto");
+    }
 
-
+public int getRepliesCount(){
+    return getInt("repliescount");
+}
 
     public void setContent(String content) {
         put("content", content);
@@ -106,4 +121,5 @@ public class Comment extends ParseObject {
         saveInBackground();
 
     }
+
 }
