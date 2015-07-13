@@ -279,7 +279,7 @@ class RepliesAdapter extends RecyclerView.Adapter<RepliesAdapter.ViewHolder> {
 
     public RepliesAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.comment_root, parent, false);
+                .inflate(R.layout.comment_reply, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
