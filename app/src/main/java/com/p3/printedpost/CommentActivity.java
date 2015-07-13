@@ -105,6 +105,14 @@ public class CommentActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.order_by) {
+            return true;
+        } else if (id == R.id.by_coolest) {
+            mAdapter.setOrderBy(Fachada.OrderCommentsBy.LIKESFIRST);
+        } else if (id == R.id.by_newest) {
+            mAdapter.setOrderBy(Fachada.OrderCommentsBy.NEWERFIRST);
+        } else if (id == R.id.by_oldest) {
+            mAdapter.setOrderBy(Fachada.OrderCommentsBy.OLDERFIRST);
         }
 
         return super.onOptionsItemSelected(item);
