@@ -64,7 +64,7 @@ public class RecentsFragment extends Fragment {
                 refresh();
             }
         });
-
+        refresh();
     }
     public void refresh() {
         mAdapter.refresh();

@@ -73,7 +73,7 @@ public class ArticleActivity extends AppCompatActivity {
                 refresh();
             }
         });
-
+        refresh();
 
     }
 
@@ -150,6 +150,7 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
         public Button bt_reply;
         public SimpleDraweeView iv_user_photo;
         Activity ctx;
+        public View root;
 
         public ViewHolder(View v) {
             super(v);
@@ -162,11 +163,11 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
             bt_down = (Button) v.findViewById(R.id.bt_down);
             bt_reply = (Button) v.findViewById(R.id.bt_reply);
             iv_user_photo = (SimpleDraweeView) v.findViewById(R.id.iv_user_photo);
-
+root= v;
 
         }
 
-        public void update(final Comment comment, Activity ctx) {
+        public void update(final Comment comment, final Activity ctx) {
             this.comment = comment;
             this.ctx = ctx;
             //tv_user_name.setText(comment.g);
@@ -188,7 +189,22 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
                     tv_down_cont.setText("" + comment.getDowns());
                 }
             });
-
+            bt_reply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ctx, CommentActivity.class);
+                    intent.putExtra("commentId", comment.getObjectId());
+                    ctx.startActivity(intent);
+                }
+            });
+            root.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ctx, CommentActivity.class);
+                    intent.putExtra("commentId", comment.getObjectId());
+                    ctx.startActivity(intent);
+                }
+            });
 
         }
 

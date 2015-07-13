@@ -20,9 +20,20 @@ public class Comment extends ParseObject {
         setContent(content);
         put("up", 0);
         put("down", 0);
-
+        put("level", 0);
     }
 
+    public Comment(PrintUser author, Comment comment, String content) {
+        setAuthor(author);
+        setArticle(comment.getArticle());
+        setContent(content);
+        put("up", 0);
+        put("down", 0);
+        put("level", comment.getLevel()+1);
+    }
+    public int getLevel(){
+        return getInt("level");
+    }
 
 
     public String getContent() {
@@ -38,9 +49,7 @@ public class Comment extends ParseObject {
 
     }
 
-    public Comment getNestedTo() {
-        return (Comment) getParseObject("nestedTo");
-    }
+
 
     public void setContent(String content) {
         put("content", content);
