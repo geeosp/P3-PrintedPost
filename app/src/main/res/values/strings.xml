@@ -8,10 +8,10 @@
     <string name="action_settings">Configurações</string>
     <string name="action_logout">Sair</string>
 
-    <string name="order_by">Ordenar comentários por...</string>
-    <string name="by_newest">Mais recente</string>
-    <string name="by_oldest">Mais antigo</string>
-    <string name="by_coolest">Mais popular</string>
+    <string name="order_by">Ordenar comentários</string>
+    <string name="by_newest">Recentes Primeiro</string>
+    <string name="by_oldest">Antigos Primeiro</string>
+    <string name="by_coolest">Populares Primeiro</string>
 
     <!--LoginActivity-->
     <string name="title_activity_login">LoginActivity</string>
@@ -24,6 +24,8 @@
     <string name="error_email_not_found">"Não te encontramos</string>
     <string name="logging_title">Entrando</string>
     <string name="logging_message">Por favor, espere</string>
+    <string name="enter_with_facebook">Entrar com o Facebook</string>
+    <string name="logging_out_title">Saindo</string>
 
     <!--RegisterActivity-->
     <string name="title_activity_register">RegisterActivity</string>
@@ -79,6 +81,7 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_comment">CommentActivity</string>
+    <string name="title_activity_logout">LogoutActivity</string>
 
 
 

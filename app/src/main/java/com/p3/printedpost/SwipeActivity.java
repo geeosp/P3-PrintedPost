@@ -129,6 +129,9 @@ public class SwipeActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }else if(id==R.id.action_logout){
+            logout();
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -278,13 +281,16 @@ public class SwipeActivity extends AppCompatActivity {
                         public void done(ParseException e) {
                             PrintUser current = PrintUser.getCurrentUser();
                             current.put("photo", fotofile);
-                            current.saveEventually(new SaveCallback() {
-                                @Override
-                                public void done(ParseException e) {
-                                    Log.e("Facebook", "Foto salva");
-                                }
-                            });
-
+                            try {
+                                current.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        Log.e("Facebook", "Foto salva");
+                                    }
+                                });
+                            } catch (Exception a) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                 } catch (Exception e) {
@@ -296,13 +302,12 @@ public class SwipeActivity extends AppCompatActivity {
         });
         t.start();
     }
-
     public void logout() {
-        ParseUser.logOut();
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, LogoutActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
+
 
     public void seek(final String articleId) {
         View vv = findViewById(R.id.rl_warnings);
@@ -311,11 +316,17 @@ public class SwipeActivity extends AppCompatActivity {
         final View articleNotFound = vv.findViewById(R.id.ll_article_not_found);
         final View articlefound = vv.findViewById(R.id.ll_article_found);
         final Article article = PrintedPost.fachada.getArticle(articleId);
+        lookingForArticle.setVisibility(View.VISIBLE);
+        articlefound.setVisibility(View.GONE);
+        articleNotFound.setVisibility(View.GONE);
         if(article==null){
             lookingForArticle.setVisibility(View.GONE);
             articlefound.setVisibility(View.GONE);
             articleNotFound.setVisibility(View.VISIBLE);
         }else{
+            lookingForArticle.setVisibility(View.GONE);
+            articlefound.setVisibility(View.VISIBLE);
+            articleNotFound.setVisibility(View.GONE);
             TextView tv_article_title = (TextView) articlefound.findViewById(R.id.tv_article_title);
             tv_article_title.setText(article.getTitle());
             TextView tv_article_excerpt = (TextView) articlefound.findViewById(R.id.tv_article_excerpt);

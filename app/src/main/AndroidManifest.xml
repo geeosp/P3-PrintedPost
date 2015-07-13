@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.p3.printedpost">
+    package="com.p3.printedpost" >
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -15,7 +15,7 @@
         android:name=".PrintedPost"
         android:allowBackup="true"
         android:label="@string/app_name"
-        android:theme="@style/MyTheme">
+        android:theme="@style/MyTheme" >
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -30,19 +30,19 @@
             android:label="@string/app_name" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
         <activity
             android:name=".ResetPasswordActivity"
             android:label="@string/app_name" />
         <activity
             android:name=".SwipeActivity"
             android:label="@string/app_name"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop" />
         <activity
             android:name=".ArticleActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:parentActivityName=".SwipeActivity">
+            android:parentActivityName=".SwipeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.p3.printedpost.SwipeActivity" />
@@ -50,7 +50,7 @@
         <activity
             android:name=".FirstActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoDisplay">
+            android:theme="@android:style/Theme.NoDisplay" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -61,10 +61,16 @@
             android:name=".CommentActivity"
             android:label="@string/title_activity_comment"
             android:launchMode="singleTop"
-            android:parentActivityName=".ArticleActivity"></activity>
+            android:parentActivityName=".ArticleActivity" />
+
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
             android:value="com.p3.printedpost.ArticleActivity" />
+
+        <activity
+            android:name=".LogoutActivity"
+            android:label="@string/title_activity_logout" >
+        </activity>
     </application>
 
 </manifest>

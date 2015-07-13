@@ -18,7 +18,7 @@
         android:layout_alignParentRight="true"
         android:layout_margin="20dp"
         >
-        <ImageButton
+        <!--ImageButton
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
@@ -33,7 +33,7 @@
             android:layout_margin="1dp"
             android:gravity="center"
             android:clickable="false"
-            />
+            /-->
 
 
     </RelativeLayout>
@@ -43,7 +43,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="20dp"
-        android:background="@color/blue_50"
+        style="?android:attr/borderlessButtonStyle"
         android:id="@+id/ib_recents"
         android:onClick="openRecents" 
         android:src="@drawable/ic_list_white_48dp" />

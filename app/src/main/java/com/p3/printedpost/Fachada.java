@@ -75,10 +75,9 @@ public class Fachada implements FachadaInterface {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                ParseRelation<Article> articlesRel = PrintUser.getCurrentUser().getRelation("articles");
-                ParseQuery<Article> query = articlesRel.getQuery();
-
-                try {
+            try {
+                    ParseRelation<Article> articlesRel = PrintUser.getCurrentUser().getRelation("articles");
+                    ParseQuery<Article> query = articlesRel.getQuery();
                     query.fromLocalDatastore();
                     query.orderByDescending("createdAt");
                     List<Article> lq = query.find();

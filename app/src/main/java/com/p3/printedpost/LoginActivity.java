@@ -162,6 +162,7 @@ public class LoginActivity extends Activity {
     }
 
     public void openMain() {
+
         Intent intent = new Intent(LoginActivity.this, SwipeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
@@ -175,6 +176,7 @@ public class LoginActivity extends Activity {
 
     public void loginFacebook(View v) {
         List<String> permissions = Arrays.asList("email", "public_profile", "user_friends");
+        final ProgressDialog progressDialog = ProgressDialog.show(this, getString(R.string.logging_title), getString(R.string.logging_message), true);
         ParseFacebookUtils.logInWithReadPermissionsInBackground(this, permissions, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException err) {
