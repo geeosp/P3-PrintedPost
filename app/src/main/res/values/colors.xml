@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary">@color/blue_500</color>
-    <color name="color_primary_dark">@color/blue_700</color>
+    <color name="color_primary">@color/brown_500</color>
+    <color name="color_primary_dark">@color/brown_700</color>
+    <color name="color_accent">#EF5350</color>
+
 
 
     <color name="test_appbackground">#e5e5e5</color>
@@ -13,8 +15,6 @@
     <color name="app_background">@color/white</color>
     <color name="half_white">#88ffffff</color>
 
-
-    >
 
     <!--alpha values-->
     <color name="invisibleDarkBlue">#00222c37</color>
