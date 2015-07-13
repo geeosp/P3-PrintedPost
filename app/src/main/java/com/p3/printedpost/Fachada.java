@@ -31,6 +31,9 @@ public class Fachada implements FachadaInterface {
 
     }
 
+    public enum OrderCommentsBy {
+        NEWERFIRST, OLDERFIRST, LIKESFIRST
+    }
 
     public void resetPassword(String email) {
         ParseUser.requestPasswordResetInBackground(email,
@@ -55,6 +58,7 @@ public class Fachada implements FachadaInterface {
         }
         return article;
     }
+
     public Comment getComment(String commentid) {
         Comment article = null;
         ParseQuery<Comment> query = ParseQuery.getQuery("Comment");
@@ -128,7 +132,7 @@ public class Fachada implements FachadaInterface {
         }
     }
 
-    public Vector<Comment> getComments(final Article article) {
+    public Vector<Comment> getComments(final Article article, final OrderCommentsBy choose) {
         final Vector<Comment> lu = new Vector<Comment>();
         Thread t = new Thread(new Runnable() {
             @Override
@@ -138,7 +142,20 @@ public class Fachada implements FachadaInterface {
                     query.fromLocalDatastore();
                     query.whereEqualTo("article", article);
                     query.whereEqualTo("level", 0);
-                    query.orderByAscending("createdAt");
+                    switch(choose){
+                        case OLDERFIRST:
+                            query.orderByAscending("createdAt,down");
+                            query.orderByDescending("up");
+                            break;
+                        case NEWERFIRST:
+                            query.orderByAscending("down");
+                            query.orderByDescending("createdAt, up");
+                            break;
+                        case LIKESFIRST:
+                            query.orderByAscending("down");
+                            query.orderByDescending("up,createdAt");
+
+                    }
                     List<Comment> lq = query.find();
                     Iterator<Comment> i = lq.iterator();
                     while (i.hasNext()) {
@@ -191,7 +208,7 @@ public class Fachada implements FachadaInterface {
         }
     }
 
-    public Vector<Comment> getReplies(final Comment comment) {
+    public Vector<Comment> getReplies(final Comment comment,final OrderCommentsBy choose) {
         final Vector<Comment> lu = new Vector<Comment>();
         Thread t = new Thread(new Runnable() {
             @Override
@@ -201,7 +218,20 @@ public class Fachada implements FachadaInterface {
 
                 try {
                     query.fromLocalDatastore();
-                    query.orderByAscending("createdAt");
+                    switch(choose){
+                        case OLDERFIRST:
+                            query.orderByAscending("createdAt,down");
+                            query.orderByDescending("up");
+                            break;
+                        case NEWERFIRST:
+                            query.orderByAscending("down");
+                            query.orderByDescending("createdAt, up");
+                            break;
+                        case LIKESFIRST:
+                            query.orderByAscending("down");
+                            query.orderByDescending("up,createdAt");
+
+                    }
                     List<Comment> lq = query.find();
                     Iterator<Comment> i = lq.iterator();
                     while (i.hasNext()) {

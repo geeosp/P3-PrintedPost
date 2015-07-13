@@ -66,7 +66,8 @@ public class CommentActivity extends AppCompatActivity {
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_recents);
         // specify an adapter (see also next example)
-        mAdapter = new RepliesAdapter(this, swipeRefreshLayout, comment);
+        Fachada.OrderCommentsBy orderBy = Fachada.OrderCommentsBy.OLDERFIRST;
+        mAdapter = new RepliesAdapter(this, swipeRefreshLayout, comment, orderBy);
         mRecyclerView.setAdapter(mAdapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -92,7 +93,8 @@ public class CommentActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_comment, menu);
         return true;
     }
-//lastCommit
+
+    //lastCommit
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -142,7 +144,7 @@ class RepliesAdapter extends RecyclerView.Adapter<RepliesAdapter.ViewHolder> {
     Comment comment;
     Activity ctx;
     SwipeRefreshLayout swipeRefreshLayout;
-
+    Fachada.OrderCommentsBy orderBy;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -223,6 +225,11 @@ class RepliesAdapter extends RecyclerView.Adapter<RepliesAdapter.ViewHolder> {
 
     }
 
+    public void setOrderBy(Fachada.OrderCommentsBy orderBy) {
+        this.orderBy = orderBy;
+        refresh();
+    }
+
     public void refresh() {
         AsyncTask asyncTask = new AsyncTask() {
             @Override
@@ -242,7 +249,7 @@ class RepliesAdapter extends RecyclerView.Adapter<RepliesAdapter.ViewHolder> {
             @Override
             protected void onPostExecute(Object o) {
                 Log.d("Refresh", "Refreshing Finished");
-                comments = PrintedPost.fachada.getReplies(comment);
+                comments = PrintedPost.fachada.getReplies(comment, orderBy);
                 notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -253,11 +260,12 @@ class RepliesAdapter extends RecyclerView.Adapter<RepliesAdapter.ViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RepliesAdapter(Activity activity, SwipeRefreshLayout swipeRefreshLayout, final Comment comment) {
+    public RepliesAdapter(Activity activity, SwipeRefreshLayout swipeRefreshLayout, final Comment comment, final Fachada.OrderCommentsBy orderBy) {
         this.comment = comment;
         this.ctx = activity;
         this.swipeRefreshLayout = swipeRefreshLayout;
-        comments = PrintedPost.fachada.getReplies(comment);
+        this.orderBy = orderBy;
+        comments = PrintedPost.fachada.getReplies(comment, orderBy);
         new Thread(new Runnable() {
             @Override
             public void run() {

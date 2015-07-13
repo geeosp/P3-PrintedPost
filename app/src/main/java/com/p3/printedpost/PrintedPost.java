@@ -13,13 +13,18 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.p3.printedpost.parseObjects.Article;
 import com.p3.printedpost.parseObjects.Comment;
 import com.p3.printedpost.parseObjects.PrintUser;
+import com.parse.FindCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by Geovane on 01/03/2015.
@@ -37,6 +42,25 @@ public class PrintedPost extends Application {
         Parse.initialize(this, "hGNzYptoQo0eLE4NNjYrom3xoRvr6zeNPkhUtSbI", "SP1UR3W9A41NPH1plxDOSzXKgJVezcavMu7zeUtB");
         FacebookSdk.sdkInitialize(getApplicationContext());
         ParseFacebookUtils.initialize(this);
+
+  /*      if(PrintUser.getCurrentUser()!=null){
+            ParseQuery<Article> query = ParseQuery.getQuery("Article");
+            query.findInBackground(new FindCallback<Article>() {
+                @Override
+                public void done(List<Article> list, ParseException e) {
+                    ParseRelation<Article> articleParseRelation = PrintUser.getCurrentUser().getRelation("articles");
+                    Iterator<Article> it= list.iterator();
+                    while(it.hasNext()){
+                        articleParseRelation.add(it.next());
+                    }
+                    PrintUser.getCurrentUser().saveInBackground();
+
+                }
+            });
+        }5
+*/
+
+
 /*
         if (PrintUser.getCurrentUser() != null) {
             Article[] articles = new Article[20];
