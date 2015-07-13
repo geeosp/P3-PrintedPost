@@ -43,9 +43,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="20dp"
-        android:background="@color/blue_50"
+        android:background="@android:color/transparent"
         android:id="@+id/ib_recents"
-        android:onClick="openRecents"/>
+        android:onClick="openRecents"
+        android:src="@drawable/ic_list_white_48dp" />
 
 
 </RelativeLayout>
