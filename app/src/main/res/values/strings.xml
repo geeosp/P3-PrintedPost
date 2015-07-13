@@ -54,7 +54,10 @@
 
     <!--ScanActivity-->
     <string name="reader_promt">Aproxime o leitor do código QR</string>
-
+    <string name="looking_for_article">Procurando artigo...</string>
+    <string name="article_not_found">Artigo não encontrado</string>
+    <string name="dismiss">Cancelar</string>
+    <string name="show_article">Ver Artigo</string>
     <!--ArticlesActivity-->
     <string name="articles">Artigos</string>
 

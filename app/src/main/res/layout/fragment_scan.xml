@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000042"
     tools:context="com.p3.printedpost.ScanFragment">
@@ -8,45 +9,164 @@
         android:id="@+id/barcode_scanner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        />
+        android:layout_alignParentTop="true" />
 
     <RelativeLayout
+        android:id="@+id/rl_notifications"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:id="@+id/rl_notifications"
         android:layout_alignParentRight="true"
         android:layout_margin="20dp"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
+
         <ImageButton
+            android:id="@+id/ib_notifications"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
-            android:background="@color/blue_50"
-            android:id="@+id/ib_notifications"/>
+            android:background="@color/blue_50" />
+
         <TextView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:text="99"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_margin="1dp"
-            android:gravity="center"
             android:clickable="false"
-            />
+            android:gravity="center"
+            android:text="99" />
 
 
     </RelativeLayout>
+
     <ImageButton
+        android:id="@+id/ib_recents"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="20dp"
         android:background="@color/blue_50"
-        android:id="@+id/ib_recents"
-        android:onClick="openRecents"/>
+        android:onClick="openRecents" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_warnings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/red_700"
+        android:gravity="center"
+        android:minHeight="100dp"
+        android:padding="15dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/ll_looking_for_article"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/looking_for_article" />
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <!--looking for article-->
+        <LinearLayout
+            android:id="@+id/ll_article_not_found"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/article_not_found" />
+
+            <Button
+                android:id="@+id/bt_dismiss"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="dismiss"
+                android:text="@string/dismiss" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/ll_article_found">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.github.curioustechizen.ago.RelativeTimeTextView
+                    android:id="@+id/tv_article_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="date"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/tv_article_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@id/tv_article_date"
+                    android:text="article title"
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/tv_article_excerpt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@id/tv_article_title"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:maxLines="4"
+                    android:text="tv_article_excerpt"
+                    android:textSize="18dp" />
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/bt_dismiss2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:text="@string/dismiss"
+                    android:onClick="dismiss"/>
+
+                <Button
+                    android:id="@+id/bt_show_article"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="60dp"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:text="@string/show_article" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

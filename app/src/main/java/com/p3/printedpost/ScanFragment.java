@@ -28,7 +28,8 @@ public class ScanFragment extends Fragment {
         public void barcodeResult(BarcodeResult result) {
             if (result.getText() != null) {
                 // colocar na tela a msg lida
-                barcodeView.setStatusText(result.getText());
+                //barcodeView.setStatusText(result.getText());
+                ((SwipeActivity)getActivity()).seek(result.getText());
                 Log.e("log", "SCANNER: " + result.getText());
                 // aqui eh onde pega o texto
             }
@@ -90,7 +91,14 @@ public class ScanFragment extends Fragment {
         return barcodeView.onKeyDown(keyCode, event) || getActivity().onKeyDown(keyCode, event);
     }
 
-    public void previousActivity(View view) {
-        Log.v("log", "clicou");
-    }
+
+
+
+
+
+
+
+
+
+
 }

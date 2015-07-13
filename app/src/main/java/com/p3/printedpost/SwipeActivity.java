@@ -18,10 +18,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.github.curioustechizen.ago.RelativeTimeTextView;
+import com.p3.printedpost.parseObjects.Article;
 import com.p3.printedpost.parseObjects.PrintUser;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -36,7 +40,7 @@ import java.util.Locale;
 
 
 public class SwipeActivity extends AppCompatActivity {
-final int transitionTime=350;
+    final int transitionTime = 350;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -61,7 +65,7 @@ final int transitionTime=350;
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-    final Toolbar toolbar = (Toolbar) findViewById(R.id.as_toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.as_toolbar);
         setSupportActionBar(toolbar);
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.app_name);
@@ -76,7 +80,7 @@ final int transitionTime=350;
 
             @Override
             public void onPageSelected(int position) {
-              TransitionDrawable transition = (TransitionDrawable)toolbar.getBackground();
+                TransitionDrawable transition = (TransitionDrawable) toolbar.getBackground();
                 if (position == 0) {
                     ScanFragment fscan = (ScanFragment) mSectionsPagerAdapter.getItem(0);
                     transition.reverseTransition(transitionTime);
@@ -298,6 +302,48 @@ final int transitionTime=350;
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    public void seek(final String articleId) {
+        View vv = findViewById(R.id.rl_warnings);
+        vv.setVisibility(View.VISIBLE);
+        final View lookingForArticle = vv.findViewById(R.id.ll_looking_for_article);
+        final View articleNotFound = vv.findViewById(R.id.ll_article_not_found);
+        final View articlefound = vv.findViewById(R.id.ll_article_found);
+        final Article article = PrintedPost.fachada.getArticle(articleId);
+        if(article==null){
+            lookingForArticle.setVisibility(View.GONE);
+            articlefound.setVisibility(View.GONE);
+            articleNotFound.setVisibility(View.VISIBLE);
+        }else{
+            TextView tv_article_title = (TextView) articlefound.findViewById(R.id.tv_article_title);
+            tv_article_title.setText(article.getTitle());
+            TextView tv_article_excerpt = (TextView) articlefound.findViewById(R.id.tv_article_excerpt);
+            tv_article_excerpt.setText(article.getExcerpt());
+            RelativeTimeTextView tv_date = (RelativeTimeTextView) articlefound.findViewById(R.id.tv_article_date);
+            tv_date.setReferenceTime(article.getCreatedAt().getTime());
+            Button bt_show_article = (Button) articlefound.findViewById(R.id.bt_show_article);
+            bt_show_article.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try{
+                        article.pin();
+                        PrintUser.getCurrentUser().getRelation("articles").add(article);
+                        PrintUser.getCurrentUser().saveInBackground();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    Intent intent = new Intent(getApplicationContext(), ArticleActivity.class);
+                    intent.putExtra("articleId", articleId);
+                    startActivity(intent);
+                }
+            });
+        }
+    }
+
+    public void dismiss(View v) {
+        View vv = findViewById(R.id.rl_warnings);
+        vv.setVisibility(View.GONE);
     }
 
 }

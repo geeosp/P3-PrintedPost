@@ -80,7 +80,7 @@ public class Fachada implements FachadaInterface {
 
                 try {
                     query.fromLocalDatastore();
-                    query.orderByAscending("createdAt");
+                    query.orderByDescending("createdAt");
                     List<Article> lq = query.find();
                     Iterator<Article> i = lq.iterator();
                     while (i.hasNext()) {
