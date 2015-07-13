@@ -2,6 +2,7 @@ package com.p3.printedpost;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -36,6 +37,7 @@ public class ArticleActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private EditText et_comment;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +67,9 @@ public class ArticleActivity extends AppCompatActivity {
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_recents);
         // specify an adapter (see also next example)
-        mAdapter = new CommentsAdapter(this, swipeRefreshLayout, article);
+        Fachada.OrderCommentsBy orderChoose = Fachada.OrderCommentsBy.OLDERFIRST;
+        ;
+        mAdapter = new CommentsAdapter(this, swipeRefreshLayout, article, orderChoose);
         mRecyclerView.setAdapter(mAdapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -73,6 +77,7 @@ public class ArticleActivity extends AppCompatActivity {
                 refresh();
             }
         });
+
         refresh();
 
     }
@@ -132,7 +137,7 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
     Article article;
     Activity ctx;
     SwipeRefreshLayout swipeRefreshLayout;
-
+    Fachada.OrderCommentsBy orderBy;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -152,6 +157,7 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
         Activity ctx;
         public View root;
 
+
         public ViewHolder(View v) {
             super(v);
             tv_user_name = (TextView) v.findViewById(R.id.tv_user_name);
@@ -163,7 +169,7 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
             bt_down = (Button) v.findViewById(R.id.bt_down);
             bt_reply = (Button) v.findViewById(R.id.bt_reply);
             iv_user_photo = (SimpleDraweeView) v.findViewById(R.id.iv_user_photo);
-root= v;
+            root = v;
 
         }
 
@@ -205,6 +211,9 @@ root= v;
                     ctx.startActivity(intent);
                 }
             });
+            tv_user_name.setText(comment.getUserName());
+            iv_user_photo.setImageURI(Uri.parse(comment.getUserPhoto()));
+
 
         }
 
@@ -230,7 +239,7 @@ root= v;
             @Override
             protected void onPostExecute(Object o) {
                 Log.d("Refresh", "Refreshing Finished");
-                comments = PrintedPost.fachada.getComments(article);
+                comments = PrintedPost.fachada.getComments(article, orderBy);
                 notifyDataSetChanged();
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -240,12 +249,18 @@ root= v;
 
     }
 
+    public void setOrderBy(Fachada.OrderCommentsBy orderBy) {
+        this.orderBy = orderBy;
+        refresh();
+    }
+
     // Provide a suitable constructor (depends on the kind of dataset)
-    public CommentsAdapter(Activity activity, SwipeRefreshLayout swipeRefreshLayout, final Article article) {
+    public CommentsAdapter(Activity activity, SwipeRefreshLayout swipeRefreshLayout, final Article article, Fachada.OrderCommentsBy commentsBy) {
         this.article = article;
         this.ctx = activity;
         this.swipeRefreshLayout = swipeRefreshLayout;
-        comments = PrintedPost.fachada.getComments(article);
+        this.orderBy = commentsBy;
+        comments = PrintedPost.fachada.getComments(article, orderBy);
         new Thread(new Runnable() {
             @Override
             public void run() {
