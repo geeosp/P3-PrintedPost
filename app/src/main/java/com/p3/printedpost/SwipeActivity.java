@@ -3,6 +3,7 @@ package com.p3.printedpost;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -35,7 +36,7 @@ import java.util.Locale;
 
 
 public class SwipeActivity extends AppCompatActivity {
-
+final int transitionTime=350;
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -50,7 +51,7 @@ public class SwipeActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
-    Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +61,9 @@ public class SwipeActivity extends AppCompatActivity {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        toolbar = (Toolbar) findViewById(R.id.as_toolbar);
+    final Toolbar toolbar = (Toolbar) findViewById(R.id.as_toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.app_name);
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -75,12 +76,16 @@ public class SwipeActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
+              TransitionDrawable transition = (TransitionDrawable)toolbar.getBackground();
                 if (position == 0) {
                     ScanFragment fscan = (ScanFragment) mSectionsPagerAdapter.getItem(0);
+                    transition.reverseTransition(transitionTime);
                     if (fscan != null)
                         fscan.resume();
                 } else {
                     ScanFragment fscan = (ScanFragment) mSectionsPagerAdapter.getItem(0);
+
+                    transition.startTransition(transitionTime);
                     if (fscan != null)
                         fscan.pause();
                 }
