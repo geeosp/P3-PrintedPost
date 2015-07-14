@@ -4,7 +4,6 @@ import android.animation.ArgbEvaluator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -40,7 +39,7 @@ import java.util.Locale;
 
 
 public class SwipeActivity extends AppCompatActivity {
-    final int transitionTime = 350;
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -56,6 +55,7 @@ public class SwipeActivity extends AppCompatActivity {
      */
     ViewPager mViewPager;
 
+    ScanFragment scanFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +74,7 @@ public class SwipeActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             Integer[] colors = {getResources().getColor(R.color.transparent), getResources().getColor(R.color.actionbarcolor)};
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 ArgbEvaluator argbEvaluator = new ArgbEvaluator();
@@ -87,7 +88,7 @@ public class SwipeActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-               // TransitionDrawable transition = (TransitionDrawable) toolbar.getBackground();
+                // TransitionDrawable transition = (TransitionDrawable) toolbar.getBackground();
                 ScanFragment fscan = (ScanFragment) mSectionsPagerAdapter.getItem(0);
                 if (position == 0) {
                     // transition.reverseTransition(transitionTime);
@@ -317,23 +318,25 @@ public class SwipeActivity extends AppCompatActivity {
     }
 
 
-    public void seek(final String articleId) {
+    public void seek(final String articleId, final ScanFragment scanFragment) {
+        this.scanFragment = scanFragment;
+        this.scanFragment.pause();
         View vv = findViewById(R.id.rl_warnings);
-        vv.setVisibility(View.VISIBLE);
-        final View lookingForArticle = vv.findViewById(R.id.ll_looking_for_article);
+        final View lookingForArticle = findViewById(R.id.ll_asking_for_article);
         final View articleNotFound = vv.findViewById(R.id.ll_article_not_found);
         final View articlefound = vv.findViewById(R.id.ll_article_found);
-        final Article article = PrintedPost.fachada.getArticle(articleId);
         lookingForArticle.setVisibility(View.VISIBLE);
         articlefound.setVisibility(View.GONE);
         articleNotFound.setVisibility(View.GONE);
+        vv.setVisibility(View.VISIBLE);
+        final Article article = PrintedPost.fachada.getArticle(articleId);
         if (article == null) {
+            articleNotFound.setVisibility(View.VISIBLE);
             lookingForArticle.setVisibility(View.GONE);
             articlefound.setVisibility(View.GONE);
-            articleNotFound.setVisibility(View.VISIBLE);
         } else {
-            lookingForArticle.setVisibility(View.GONE);
             articlefound.setVisibility(View.VISIBLE);
+            lookingForArticle.setVisibility(View.GONE);
             articleNotFound.setVisibility(View.GONE);
             TextView tv_article_title = (TextView) articlefound.findViewById(R.id.tv_article_title);
             tv_article_title.setText(article.getTitle());
@@ -355,14 +358,17 @@ public class SwipeActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), ArticleActivity.class);
                     intent.putExtra("articleId", articleId);
                     startActivity(intent);
+                    dismiss(null);
                 }
             });
         }
+
     }
 
     public void dismiss(View v) {
         View vv = findViewById(R.id.rl_warnings);
         vv.setVisibility(View.GONE);
+        scanFragment.resume();
     }
 
 }

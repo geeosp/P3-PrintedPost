@@ -1,7 +1,7 @@
 package com.p3.printedpost;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -25,11 +25,13 @@ public class ScanFragment extends Fragment {
     private BarcodeCallback callback = new BarcodeCallback() {
 
         @Override
-        public void barcodeResult(BarcodeResult result) {
+        public void barcodeResult(final BarcodeResult result) {
             if (result.getText() != null) {
                 // colocar na tela a msg lida
                 //barcodeView.setStatusText(result.getText());
-                ((SwipeActivity)getActivity()).seek(result.getText());
+
+                ((SwipeActivity) getActivity()).seek(result.getText(), ScanFragment.this);
+
                 Log.e("log", "SCANNER: " + result.getText());
                 // aqui eh onde pega o texto
             }
@@ -90,15 +92,6 @@ public class ScanFragment extends Fragment {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return barcodeView.onKeyDown(keyCode, event) || getActivity().onKeyDown(keyCode, event);
     }
-
-
-
-
-
-
-
-
-
 
 
 }
