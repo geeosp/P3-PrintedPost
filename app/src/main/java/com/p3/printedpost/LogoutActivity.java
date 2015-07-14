@@ -21,6 +21,9 @@ public class LogoutActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logout);
         final ProgressDialog progressDialog = ProgressDialog.show(this, getString(R.string.logging_out_title), getString(R.string.logging_message), true);
+
+            PrintedPost.fachada=null;
+
         ParseUser.logOutInBackground(new LogOutCallback() {
             @Override
             public void done(ParseException e) {
