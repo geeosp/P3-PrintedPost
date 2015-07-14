@@ -1,5 +1,6 @@
 package com.p3.printedpost;
 
+import android.animation.ArgbEvaluator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,7 +30,6 @@ import com.p3.printedpost.parseObjects.Article;
 import com.p3.printedpost.parseObjects.PrintUser;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.json.JSONObject;
@@ -73,23 +73,30 @@ public class SwipeActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            Integer[] colors = {getResources().getColor(R.color.transparent), getResources().getColor(R.color.actionbarcolor)};
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                ArgbEvaluator argbEvaluator = new ArgbEvaluator();
+                if (position < (mSectionsPagerAdapter.getCount() - 1) && position < (colors.length - 1)) {
+                    toolbar.setBackgroundColor((Integer) argbEvaluator.evaluate(positionOffset, colors[position], colors[position + 1]));
+                } else {
+                    toolbar.setBackgroundColor(colors[colors.length - 1]);
 
+                }
             }
 
             @Override
             public void onPageSelected(int position) {
-                TransitionDrawable transition = (TransitionDrawable) toolbar.getBackground();
+               // TransitionDrawable transition = (TransitionDrawable) toolbar.getBackground();
+                ScanFragment fscan = (ScanFragment) mSectionsPagerAdapter.getItem(0);
                 if (position == 0) {
-                    ScanFragment fscan = (ScanFragment) mSectionsPagerAdapter.getItem(0);
-                    transition.reverseTransition(transitionTime);
+                    // transition.reverseTransition(transitionTime);
                     if (fscan != null)
                         fscan.resume();
                 } else {
-                    ScanFragment fscan = (ScanFragment) mSectionsPagerAdapter.getItem(0);
 
-                    transition.startTransition(transitionTime);
+
+//                    transition.startTransition(transitionTime);
                     if (fscan != null)
                         fscan.pause();
                 }
@@ -129,7 +136,7 @@ public class SwipeActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }else if(id==R.id.action_logout){
+        } else if (id == R.id.action_logout) {
             logout();
 
         }
@@ -302,6 +309,7 @@ public class SwipeActivity extends AppCompatActivity {
         });
         t.start();
     }
+
     public void logout() {
         Intent intent = new Intent(this, LogoutActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -319,11 +327,11 @@ public class SwipeActivity extends AppCompatActivity {
         lookingForArticle.setVisibility(View.VISIBLE);
         articlefound.setVisibility(View.GONE);
         articleNotFound.setVisibility(View.GONE);
-        if(article==null){
+        if (article == null) {
             lookingForArticle.setVisibility(View.GONE);
             articlefound.setVisibility(View.GONE);
             articleNotFound.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             lookingForArticle.setVisibility(View.GONE);
             articlefound.setVisibility(View.VISIBLE);
             articleNotFound.setVisibility(View.GONE);
@@ -337,11 +345,11 @@ public class SwipeActivity extends AppCompatActivity {
             bt_show_article.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    try{
+                    try {
                         article.pin();
                         PrintUser.getCurrentUser().getRelation("articles").add(article);
                         PrintUser.getCurrentUser().saveInBackground();
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     Intent intent = new Intent(getApplicationContext(), ArticleActivity.class);
