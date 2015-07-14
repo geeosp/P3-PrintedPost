@@ -44,32 +44,19 @@ public class ArticleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
         Intent intent = getIntent();
-        String articleId = intent.getStringExtra("articleId");
-        article = PrintedPost.fachada.getArticle(articleId);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(article.getTitle());
         actionBar.setDisplayHomeAsUpEnabled(true);
         RelativeTimeTextView tv_date = (RelativeTimeTextView) findViewById(R.id.tv_article_date);
-        tv_date.setReferenceTime(article.getCreatedAt().getTime());
         TextView tv_article_excerpt = (TextView) findViewById(R.id.tv_article_excerpt);
-        tv_article_excerpt.setText(article.getExcerpt());
         et_comment = (EditText) findViewById(R.id.et_comment);
         mRecyclerView = (RecyclerView) findViewById(R.id.rv_recents);
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_recents);
         mRecyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.srl_recents);
-        // specify an adapter (see also next example)
         Fachada.OrderCommentsBy orderChoose = Fachada.OrderCommentsBy.OLDERFIRST;
-        ;
         mAdapter = new CommentsAdapter(this, swipeRefreshLayout, article, orderChoose);
         mRecyclerView.setAdapter(mAdapter);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -78,6 +65,19 @@ public class ArticleActivity extends AppCompatActivity {
                 refresh();
             }
         });
+
+        String articleId = intent.getStringExtra("articleId");
+        article = PrintedPost.fachada.getArticle(articleId);
+        actionBar.setTitle(article.getTitle());
+        tv_date.setReferenceTime(article.getCreatedAt().getTime());
+        tv_article_excerpt.setText(article.getExcerpt());
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+
+        // use a linear layout manager
+
+        // specify an adapter (see also next example)
+        ;
 
         refresh();
 

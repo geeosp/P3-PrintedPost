@@ -51,11 +51,19 @@ public class Fachada implements FachadaInterface {
     public Article getArticle(String articleid) {
         Article article = null;
         ParseQuery<Article> query = ParseQuery.getQuery("Article");
+        query.fromLocalDatastore();
         try {
             article = (Article) query.get(articleid);
-        } catch (Exception e) {
+        } catch (ParseException e) {//não tá no banco local
             e.printStackTrace();
+            query = ParseQuery.getQuery("Article");
+            try {
+                article = (Article) query.get(articleid);
+            } catch (Exception e2) {
+                e.printStackTrace();
+            }
         }
+
         return article;
     }
 
@@ -75,7 +83,7 @@ public class Fachada implements FachadaInterface {
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-            try {
+                try {
                     ParseRelation<Article> articlesRel = PrintUser.getCurrentUser().getRelation("articles");
                     ParseQuery<Article> query = articlesRel.getQuery();
                     query.fromLocalDatastore();
@@ -141,7 +149,7 @@ public class Fachada implements FachadaInterface {
                     query.fromLocalDatastore();
                     query.whereEqualTo("article", article);
                     query.whereEqualTo("level", 0);
-                    switch(choose){
+                    switch (choose) {
                         case OLDERFIRST:
                             query.orderByAscending("createdAt");
 //                            query.orderByDescending("up");
@@ -207,7 +215,7 @@ public class Fachada implements FachadaInterface {
         }
     }
 
-    public Vector<Comment> getReplies(final Comment comment,final OrderCommentsBy choose) {
+    public Vector<Comment> getReplies(final Comment comment, final OrderCommentsBy choose) {
         final Vector<Comment> lu = new Vector<Comment>();
         Thread t = new Thread(new Runnable() {
             @Override
@@ -217,7 +225,7 @@ public class Fachada implements FachadaInterface {
 
                 try {
                     query.fromLocalDatastore();
-                    switch(choose){
+                    switch (choose) {
                         case OLDERFIRST:
                             query.orderByAscending("createdAt");
 //                            query.orderByDescending("up");

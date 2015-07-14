@@ -228,46 +228,48 @@ public class SwipeActivity extends AppCompatActivity {
     }
 
     public void setEmailAndUserNameToServer() {
-
-        GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(
-                            JSONObject object,
-                            GraphResponse response) {
-                        Log.e("oi", object.toString());
-                        PrintUser user = PrintUser.getCurrentUser();
-                        String name = "", email = "";
-                        try {
-                            name = object.getString("name");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        try {
-                            email = object.getString("email");
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        user.put("name", name);
-                        try {
-                            user.setEmail(email);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        user.saveInBackground();
-                        try {
-                            String userid = object.getString("id");
-                            saveFacebookPhoto(userid);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+        try {
+            GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                        @Override
+                        public void onCompleted(
+                                JSONObject object,
+                                GraphResponse response) {
+                            
+                            PrintUser user = PrintUser.getCurrentUser();
+                            String name = "", email = "";
+                            try {
+                                name = object.getString("name");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            try {
+                                email = object.getString("email");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            user.put("name", name);
+                            try {
+                                user.setEmail(email);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            user.saveInBackground();
+                            try {
+                                String userid = object.getString("id");
+                                saveFacebookPhoto(userid);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
-                }
-        );
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "name, email");
-        request.setParameters(parameters);
-        request.executeAsync();
-
+            );
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "name, email");
+            request.setParameters(parameters);
+            request.executeAsync();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -384,10 +386,10 @@ public class SwipeActivity extends AppCompatActivity {
             }
         };
 
-    asyncTask.execute();
+        asyncTask.execute();
 
 
-}
+    }
 
     public void dismiss(View v) {
         View vv = findViewById(R.id.rl_warnings);

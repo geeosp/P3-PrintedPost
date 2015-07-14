@@ -81,6 +81,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"/>
+            <Button
+                android:id="@+id/bt_dismiss3"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="dismiss"
+                android:text="@string/dismiss"
+                android:textColor="@color/actionbar_text" />
         </LinearLayout>
         <!--looking for article-->
         <LinearLayout
