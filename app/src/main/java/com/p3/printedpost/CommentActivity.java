@@ -242,14 +242,17 @@ class RepliesAdapter extends RecyclerView.Adapter<RepliesAdapter.ViewHolder> {
     public void refresh() {
         AsyncTask asyncTask = new AsyncTask() {
             @Override
-            protected Object doInBackground(Object[] params) {
+            protected void onPreExecute() {
                 ctx.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(true);
                     }
                 });
+            }
 
+            @Override
+            protected Object doInBackground(Object[] params) {
                 PrintedPost.fachada.updateReplies(comment);
                 Log.d("Refresh", "Refreshing started");
                 return null;

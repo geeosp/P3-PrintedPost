@@ -2,7 +2,6 @@ package com.p3.printedpost;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -233,14 +232,17 @@ class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
     public void refresh() {
         AsyncTask asyncTask = new AsyncTask() {
             @Override
-            protected Object doInBackground(Object[] params) {
+            protected void onPreExecute() {
                 ctx.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(true);
                     }
                 });
+            }
 
+            @Override
+            protected Object doInBackground(Object[] params) {
                 PrintedPost.fachada.updateComments(article);
                 Log.d("Refresh", "Refreshing started");
                 return null;

@@ -4,6 +4,7 @@ import android.animation.ArgbEvaluator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -321,49 +322,72 @@ public class SwipeActivity extends AppCompatActivity {
     public void seek(final String articleId, final ScanFragment scanFragment) {
         this.scanFragment = scanFragment;
         this.scanFragment.pause();
-        View vv = findViewById(R.id.rl_warnings);
+        final View vv = findViewById(R.id.rl_warnings);
         final View lookingForArticle = findViewById(R.id.ll_asking_for_article);
         final View articleNotFound = vv.findViewById(R.id.ll_article_not_found);
         final View articlefound = vv.findViewById(R.id.ll_article_found);
-        lookingForArticle.setVisibility(View.VISIBLE);
-        articlefound.setVisibility(View.GONE);
-        articleNotFound.setVisibility(View.GONE);
-        vv.setVisibility(View.VISIBLE);
-        final Article article = PrintedPost.fachada.getArticle(articleId);
-        if (article == null) {
-            articleNotFound.setVisibility(View.VISIBLE);
-            lookingForArticle.setVisibility(View.GONE);
-            articlefound.setVisibility(View.GONE);
-        } else {
-            articlefound.setVisibility(View.VISIBLE);
-            lookingForArticle.setVisibility(View.GONE);
-            articleNotFound.setVisibility(View.GONE);
-            TextView tv_article_title = (TextView) articlefound.findViewById(R.id.tv_article_title);
-            tv_article_title.setText(article.getTitle());
-            TextView tv_article_excerpt = (TextView) articlefound.findViewById(R.id.tv_article_excerpt);
-            tv_article_excerpt.setText(article.getExcerpt());
-            RelativeTimeTextView tv_date = (RelativeTimeTextView) articlefound.findViewById(R.id.tv_article_date);
-            tv_date.setReferenceTime(article.getCreatedAt().getTime());
-            Button bt_show_article = (Button) articlefound.findViewById(R.id.bt_show_article);
-            bt_show_article.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        article.pin();
-                        PrintUser.getCurrentUser().getRelation("articles").add(article);
-                        PrintUser.getCurrentUser().saveInBackground();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    Intent intent = new Intent(getApplicationContext(), ArticleActivity.class);
-                    intent.putExtra("articleId", articleId);
-                    startActivity(intent);
-                    dismiss(null);
-                }
-            });
-        }
 
-    }
+
+        AsyncTask<Void, Void, Article> asyncTask = new AsyncTask<Void, Void, Article>() {
+            @Override
+            protected void onPreExecute() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        lookingForArticle.setVisibility(View.VISIBLE);
+                        articlefound.setVisibility(View.GONE);
+                        articleNotFound.setVisibility(View.GONE);
+                        vv.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+
+            @Override
+            protected Article doInBackground(Void... params) {
+                return PrintedPost.fachada.getArticle(articleId);
+            }
+
+            @Override
+            protected void onPostExecute(final Article article) {
+                if (article == null) {
+                    articleNotFound.setVisibility(View.VISIBLE);
+                    lookingForArticle.setVisibility(View.GONE);
+                    articlefound.setVisibility(View.GONE);
+                } else {
+                    articlefound.setVisibility(View.VISIBLE);
+                    lookingForArticle.setVisibility(View.GONE);
+                    articleNotFound.setVisibility(View.GONE);
+                    TextView tv_article_title = (TextView) articlefound.findViewById(R.id.tv_article_title);
+                    tv_article_title.setText(article.getTitle());
+                    TextView tv_article_excerpt = (TextView) articlefound.findViewById(R.id.tv_article_excerpt);
+                    tv_article_excerpt.setText(article.getExcerpt());
+                    RelativeTimeTextView tv_date = (RelativeTimeTextView) articlefound.findViewById(R.id.tv_article_date);
+                    tv_date.setReferenceTime(article.getCreatedAt().getTime());
+                    Button bt_show_article = (Button) articlefound.findViewById(R.id.bt_show_article);
+                    bt_show_article.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                article.pin();
+                                PrintUser.getCurrentUser().getRelation("articles").add(article);
+                                PrintUser.getCurrentUser().saveInBackground();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            Intent intent = new Intent(getApplicationContext(), ArticleActivity.class);
+                            intent.putExtra("articleId", articleId);
+                            startActivity(intent);
+                            dismiss(null);
+                        }
+                    });
+                }
+            }
+        };
+
+    asyncTask.execute();
+
+
+}
 
     public void dismiss(View v) {
         View vv = findViewById(R.id.rl_warnings);
