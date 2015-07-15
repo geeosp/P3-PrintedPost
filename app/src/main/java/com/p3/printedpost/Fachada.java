@@ -60,7 +60,7 @@ public class Fachada implements FachadaInterface {
             try {
                 article = (Article) query.get(articleid);
             } catch (Exception e2) {
-                e.printStackTrace();
+                e2.printStackTrace();
             }
         }
 
@@ -68,14 +68,21 @@ public class Fachada implements FachadaInterface {
     }
 
     public Comment getComment(String commentid) {
-        Comment article = null;
+        Comment comment = null;
         ParseQuery<Comment> query = ParseQuery.getQuery("Comment");
+        query.fromLocalDatastore();
         try {
-            article = (Comment) query.get(commentid);
-        } catch (Exception e) {
+            comment = (Comment) query.get(commentid);
+        } catch (ParseException e) {
             e.printStackTrace();
+            query=ParseQuery.getQuery("Comment");
+            try{
+                comment =(Comment) query.get(commentid);
+            }catch (Exception e2){
+                e2.printStackTrace();
+            }
         }
-        return article;
+        return comment;
     }
 
     public Vector<Article> getArticles() {

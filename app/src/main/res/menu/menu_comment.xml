@@ -4,9 +4,10 @@
     tools:context="com.p3.printedpost.CommentActivity">
     <item android:id="@+id/order_by"
         android:title="@string/order_by"
-        android:icon="@drawable/sort_by"
         android:orderInCategory="100"
-        app:showAsAction="never">
+        app:showAsAction="always"
+        android:icon="@drawable/sort_by"
+        >
         <menu>
             <item android:id="@+id/by_oldest"
                 android:title="@string/by_oldest"
@@ -18,5 +19,6 @@
                 android:title="@string/by_coolest" />
         </menu>
     </item>
+
 
 </menu>

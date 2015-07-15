@@ -78,12 +78,7 @@ public int getRepliesCount(){
         put("article", article);
     }
 
-    /*
-    public void setNestedTo(Comment comment){
-        put("nestedTo", comment);
 
-    }
-*/
     @Override
     public String getObjectId() {
         return super.getObjectId();
